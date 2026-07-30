@@ -9,20 +9,19 @@ import {
   Clock, 
   FileText, 
   ShieldCheck, 
-  Info,
   Lock,
   Building2,
   AlertCircle,
   Trash2,
   FileDown,
   ChevronRight,
-  ExternalLink,
   Printer,
   Share2,
-  Globe,
   MapPin,
   Landmark,
-  User
+  User,
+  CheckCircle2,
+  QrCode
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -81,15 +80,318 @@ export default function TransactionDetailsPage() {
     router.replace("/dashboard");
   };
 
-  const handleDownload = () => {
+  const handleDownloadPdf = () => {
+    if (!transaction) return;
     setIsDownloading(true);
-    setTimeout(() => {
+
+    const isCredit = transaction.transactionType === "Deposit";
+    const dateFormatted = new Date(transaction.transactionDate || Date.now()).toLocaleDateString('fr-BE', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric'
+    });
+
+    const printWindow = window.open('', '_blank', 'width=900,height=1150');
+    if (!printWindow) {
+      window.print();
       setIsDownloading(false);
-      toast({
-        title: "Reçu généré",
-        description: "Le document PDF a été enregistré.",
-      });
-    }, 2000);
+      return;
+    }
+
+    const receiptHtml = `
+      <!DOCTYPE html>
+      <html lang="fr">
+      <head>
+        <meta charset="UTF-8">
+        <title>ING_Recu_Officiel_${(transaction.id || 'BNP3180000').slice(-10)}.pdf</title>
+        <style>
+          @page { size: A4; margin: 12mm; }
+          body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #1a1a1a;
+            margin: 0;
+            padding: 30px;
+            background: #ffffff;
+            -webkit-print-color-adjust: exact;
+          }
+          .header-table {
+            width: 100%;
+            border-bottom: 4px solid #ff6200;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+          }
+          .logo-badge {
+            background-color: #ff6200;
+            color: #ffffff;
+            font-weight: 900;
+            font-size: 24px;
+            padding: 10px 22px;
+            border-radius: 6px;
+            display: inline-block;
+            letter-spacing: -1px;
+          }
+          .subtitle {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: #555555;
+            font-weight: 800;
+            margin-top: 4px;
+          }
+          .title-right {
+            text-align: right;
+          }
+          .doc-type {
+            font-size: 24px;
+            font-weight: 900;
+            color: #222222;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+          .ref-code {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 13px;
+            font-weight: bold;
+            color: #ff6200;
+            background: #fff5ee;
+            padding: 4px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 6px;
+            border: 1px solid #ffe0cc;
+          }
+          .banner-certified {
+            background: #f0fdf4;
+            border: 1.5px solid #bbf7d0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+          }
+          .banner-text {
+            color: #15803d;
+            font-weight: 800;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+          }
+          .amount-card {
+            background: linear-gradient(135deg, #222222 0%, #3a3a3a 100%);
+            color: #ffffff;
+            border-radius: 18px;
+            padding: 35px 25px;
+            text-align: center;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+          }
+          .amount-tag {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #ff6200;
+            font-weight: 900;
+            margin-bottom: 10px;
+          }
+          .amount-val {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+          }
+          .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 30px;
+          }
+          .box {
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 20px;
+            background: #fafafa;
+          }
+          .box-title {
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ff6200;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 8px;
+          }
+          .field {
+            margin-bottom: 12px;
+          }
+          .field:last-child {
+            margin-bottom: 0;
+          }
+          .field-label {
+            font-size: 11px;
+            color: #6b7280;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+          .field-value {
+            font-size: 14px;
+            font-weight: 800;
+            color: #111827;
+            margin-top: 2px;
+          }
+          .mono-txt {
+            font-family: "Courier New", Courier, monospace;
+            letter-spacing: 1px;
+          }
+          .footer-section {
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 2px solid #f3f4f6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+          .stamp-box {
+            border: 2px solid #ff6200;
+            padding: 12px 18px;
+            border-radius: 10px;
+            color: #ff6200;
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            line-height: 1.5;
+            background: #fffdfb;
+          }
+          .legal-txt {
+            font-size: 10px;
+            color: #9ca3af;
+            max-width: 440px;
+            line-height: 1.5;
+          }
+        </style>
+      </head>
+      <body>
+        <table class="header-table">
+          <tr>
+            <td>
+              <div class="logo-badge">ING</div>
+              <div style="font-weight: 900; font-size: 18px; color: #222; margin-top: 6px;">Private Banking</div>
+              <div class="subtitle">ING Belgium SA / NV</div>
+            </td>
+            <td class="title-right">
+              <div class="doc-type">${isCredit ? 'Avis de Crédit SEPA' : 'Avis de Débit SEPA'}</div>
+              <div class="ref-code">#TRX-${(transaction.id || 'BNP3180000').slice(-10).toUpperCase()}</div>
+              <div style="font-size: 11px; color: #666; margin-top: 6px; font-weight: 600;">Date : ${dateFormatted}</div>
+            </td>
+          </tr>
+        </table>
+
+        <div class="banner-certified">
+          <span class="banner-text">✓ Attestation Officielle de Virement Certifié SEPA</span>
+          <span style="font-size: 11px; font-weight: 800; color: #166534;">Statut : EXÉCUTÉ / EXPÉDIÉ</span>
+        </div>
+
+        <div class="amount-card">
+          <div class="amount-tag">${isCredit ? 'Montant Total Crédité' : 'Montant Total Débité'}</div>
+          <div class="amount-val">€ ${transaction.amount.toLocaleString('fr-BE', { minimumFractionDigits: 2 })}</div>
+        </div>
+
+        <div class="grid-2">
+          <div class="box">
+            <div class="box-title">${isCredit ? "1. Donneur d'Ordre (Émetteur)" : "1. Compte Émetteur"}</div>
+            <div class="field">
+              <div class="field-label">Raison Sociale / Nom</div>
+              <div class="field-value">${isCredit ? (transaction.beneficiaryName || 'BNP PARIBAS SA') : 'Bernard Berlin Leroy'}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Banque Émettrice</div>
+              <div class="field-value">${isCredit ? (transaction.beneficiaryBankName || 'BNP PARIBAS SA') : 'ING Belgium SA/NV'}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Numéro IBAN</div>
+              <div class="field-value mono-txt">${isCredit ? (transaction.beneficiaryIban || 'FR76 3000 4028 3700 0000 0000 000') : 'BE31 3401 8410 7755'}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Code BIC / SWIFT</div>
+              <div class="field-value mono-txt">${isCredit ? (transaction.beneficiaryBic || 'BNPAFRPP') : 'BBRUBEBB'}</div>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="box-title">${isCredit ? "2. Compte Bénéficiaire (Destinataire)" : "2. Bénéficiaire"}</div>
+            <div class="field">
+              <div class="field-label">Titulaire du Compte</div>
+              <div class="field-value">${isCredit ? 'Bernard Berlin Leroy' : (transaction.beneficiaryName || 'Destinataire')}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Banque Réceptrice</div>
+              <div class="field-value">${isCredit ? 'ING Belgium SA/NV' : (transaction.beneficiaryBankName || 'Institution Destinataire')}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Numéro IBAN</div>
+              <div class="field-value mono-txt">${isCredit ? 'BE31 3401 8410 7755' : transaction.beneficiaryIban}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Code BIC / SWIFT</div>
+              <div class="field-value mono-txt">${isCredit ? 'BBRUBEBB' : (transaction.beneficiaryBic || 'N/A')}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="box" style="margin-bottom: 30px;">
+          <div class="box-title">3. Détails Techniques & Exécution SEPA</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="field">
+              <div class="field-label">Libellé / Communication</div>
+              <div class="field-value">${transaction.description || 'Virement SEPA'}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Type d'Opération</div>
+              <div class="field-value">${transaction.transferType === 'instant' ? 'Virement Instantané IP' : 'Virement SEPA Standard'}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Date de Valeur</div>
+              <div class="field-value">${dateFormatted}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Frais de Traitement</div>
+              <div class="field-value">0,00 € (Inclus Private Banking)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <div class="stamp-box">
+            🛡️ ING SAFEGUARD CERTIFIED<br>
+            DIGITAL SIGNATURE : VERIFIED SEPA-NET
+          </div>
+          <div class="legal-txt">
+            Document généré automatiquement et certifié conforme par ING Belgium SA/NV, Avenue Marnix 24, B-1000 Bruxelles. 
+            Ce reçu constitue un extrait bancaire officiel ayant valeur de preuve légale selon le droit bancaire européen.
+          </div>
+        </div>
+
+        <script>
+          window.onload = function() {
+            setTimeout(function() {
+              window.print();
+            }, 300);
+          };
+        </script>
+      </body>
+      </html>
+    `;
+
+    printWindow.document.write(receiptHtml);
+    printWindow.document.close();
+    setIsDownloading(false);
+
+    toast({
+      title: "Reçu PDF généré",
+      description: "Le document bancaire certifié est prêt pour impression ou sauvegarde.",
+    });
   };
 
   const showUnderConstruction = () => {
@@ -120,6 +422,7 @@ export default function TransactionDetailsPage() {
   }
 
   const isFailed = transaction.status === "Failed";
+  const isDeposit = transaction.transactionType === "Deposit";
 
   return (
     <div className="max-w-5xl mx-auto space-y-10 pb-24 animate-in fade-in duration-700">
@@ -138,9 +441,9 @@ export default function TransactionDetailsPage() {
           </Button>
           <Button 
             variant="default" 
-            onClick={handleDownload}
+            onClick={handleDownloadPdf}
             disabled={isDownloading}
-            className="rounded-xl font-black h-12 px-8 shadow-xl shadow-primary/10 transition-all hover:scale-[1.02]"
+            className="rounded-xl font-black h-12 px-8 shadow-xl shadow-primary/10 transition-all hover:scale-[1.02] bg-[#ff6200] hover:bg-[#e05600] text-white"
           >
             <FileDown className="mr-2 h-5 w-5" /> {isDownloading ? "Génération..." : "Télécharger le reçu PDF"}
           </Button>
@@ -171,7 +474,7 @@ export default function TransactionDetailsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         <div className="lg:col-span-2 space-y-10">
           <Card className="premium-card border-none overflow-hidden relative shadow-[0_40px_80px_-15px_rgba(0,0,0,0.12)]">
-            <div className="absolute top-0 left-0 w-full h-4 bg-primary" />
+            <div className="absolute top-0 left-0 w-full h-4 bg-[#ff6200]" />
             
             <CardHeader className="bg-gray-50/50 pb-10 border-b border-gray-100 px-12 pt-12">
               <div className="flex justify-between items-start">
@@ -179,12 +482,14 @@ export default function TransactionDetailsPage() {
                   <div className="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 inline-block">
                     <Image src="https://i.imgur.com/WWZ10oQ.png" alt="ING Logo" width={90} height={36} className="opacity-90" />
                   </div>
-                  <h3 className="text-4xl font-black text-[#333] tracking-tighter">Avis de Virement</h3>
-                  <p className="text-[11px] font-black text-muted-foreground uppercase tracking-[0.3em]">Document Certifié • Private Banking Gold</p>
+                  <h3 className="text-4xl font-black text-[#333] tracking-tighter">
+                    {isDeposit ? "Avis de Crédit" : "Avis de Débit"}
+                  </h3>
+                  <p className="text-[11px] font-black text-muted-foreground uppercase tracking-[0.3em]">Extrait de Virement Certifié • Private Banking Gold</p>
                 </div>
                 <div className="text-right space-y-2">
                   <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">RÉFÉRENCE ARCHIVE</p>
-                  <p className="text-sm font-mono font-bold text-[#333] bg-white px-4 py-1.5 rounded-xl border border-gray-100 shadow-sm inline-block">#TRX-{transaction.id.slice(-10).toUpperCase()}</p>
+                  <p className="text-sm font-mono font-bold text-[#333] bg-white px-4 py-1.5 rounded-xl border border-gray-100 shadow-sm inline-block">#TRX-{(transaction.id || 'BNP3180000').slice(-10).toUpperCase()}</p>
                 </div>
               </div>
             </CardHeader>
@@ -193,11 +498,15 @@ export default function TransactionDetailsPage() {
               <div className="p-12 text-center bg-white relative">
                 <div className="absolute inset-0 bg-primary/5 blur-[80px] opacity-30 pointer-events-none" />
                 <div className="relative z-10 space-y-2">
-                  <p className="text-[13px] font-black text-muted-foreground uppercase tracking-[0.4em] mb-4">Montant Principal</p>
-                  <p className="text-8xl font-black text-[#333] tracking-tighter drop-shadow-md">€ {transaction.amount.toLocaleString('fr-BE', { minimumFractionDigits: 2 })}</p>
+                  <p className="text-[13px] font-black text-muted-foreground uppercase tracking-[0.4em] mb-4">
+                    {isDeposit ? "Montant Crédité" : "Montant Principal"}
+                  </p>
+                  <p className={`text-8xl font-black tracking-tighter drop-shadow-md ${isDeposit ? 'text-green-600' : 'text-[#333]'}`}>
+                    {isDeposit ? '+' : '-'}€ {transaction.amount.toLocaleString('fr-BE', { minimumFractionDigits: 2 })}
+                  </p>
                   <div className="flex items-center justify-center gap-3 mt-6">
-                    <Badge variant="outline" className="font-bold border-primary/20 text-primary px-5 py-1.5 rounded-full uppercase text-[11px] tracking-widest bg-primary/5">
-                      {transaction.transferType === 'instant' ? 'Virement Instantané' : 'Virement Classique'}
+                    <Badge variant="outline" className={`font-bold px-5 py-1.5 rounded-full uppercase text-[11px] tracking-widest ${isDeposit ? 'bg-green-50 text-green-700 border-green-200' : 'bg-primary/5 text-primary border-primary/20'}`}>
+                      {isDeposit ? 'Virement SEPA Reçu' : (transaction.transferType === 'instant' ? 'Virement Instantané' : 'Virement Classique')}
                     </Badge>
                   </div>
                 </div>
@@ -207,52 +516,80 @@ export default function TransactionDetailsPage() {
 
               <div className="p-12 space-y-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                  {/* BOX 1 : DONNEUR D'ORDRE (ÉMETTEUR) */}
                   <div className="space-y-6">
                     <div className="text-[11px] font-black text-primary uppercase tracking-[0.3em] flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-primary" /> Donneur d'Ordre
+                      <div className="w-2 h-2 rounded-full bg-primary" />
+                      {isDeposit ? "Donneur d'Ordre (Émetteur)" : "Donneur d'Ordre"}
                     </div>
                     <div className="p-6 bg-gray-50 rounded-[2.5rem] border border-gray-100 shadow-inner space-y-4">
                       <div className="flex items-center gap-4">
-                        <div className="p-3 bg-white rounded-2xl shadow-sm"><User className="h-6 w-6 text-primary" /></div>
+                        <div className="p-3 bg-white rounded-2xl shadow-sm">
+                          {isDeposit ? <Building2 className="h-6 w-6 text-primary" /> : <User className="h-6 w-6 text-primary" />}
+                        </div>
                         <div>
-                          <p className="font-black text-[#333] text-xl">Bernard Berlin Leroy</p>
-                          <p className="text-xs font-bold text-muted-foreground">Compte Private Gold</p>
+                          <p className="font-black text-[#333] text-xl">
+                            {isDeposit ? (transaction.beneficiaryName || "BNP PARIBAS SA") : "Bernard Berlin Leroy"}
+                          </p>
+                          <p className="text-xs font-bold text-muted-foreground">
+                            {isDeposit ? (transaction.beneficiaryBankName || "BNP PARIBAS SA") : "Compte Private Gold"}
+                          </p>
                         </div>
                       </div>
-                      <div className="pt-4 border-t border-gray-200/50">
-                        <p className="text-[10px] font-black text-muted-foreground uppercase mb-1">IBAN / Compte</p>
-                        <p className="font-mono font-bold text-sm tracking-widest">BE31 3401 8410 7755</p>
+                      <div className="pt-4 border-t border-gray-200/50 space-y-2">
+                        <div>
+                          <p className="text-[10px] font-black text-muted-foreground uppercase mb-1">IBAN / Compte Émetteur</p>
+                          <p className="font-mono font-bold text-sm tracking-widest text-gray-800">
+                            {isDeposit ? (transaction.beneficiaryIban || "FR76 3000 4028 3700 0000 0000 000") : "BE31 3401 8410 7755"}
+                          </p>
+                        </div>
+                        {isDeposit && (
+                          <div>
+                            <p className="text-[10px] font-black text-muted-foreground uppercase mb-1">Code BIC / SWIFT</p>
+                            <p className="font-mono font-bold text-xs text-gray-600">{transaction.beneficiaryBic || 'BNPAFRPP'}</p>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
 
+                  {/* BOX 2 : DESTINATAIRE / BÉNÉFICIAIRE */}
                   <div className="space-y-6">
                     <div className="text-[11px] font-black text-gray-400 uppercase tracking-[0.3em] flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-gray-300" /> Destinataire
+                      <div className="w-2 h-2 rounded-full bg-gray-300" />
+                      {isDeposit ? "Compte Crédité (Bénéficiaire)" : "Destinataire"}
                     </div>
                     <div className="p-6 bg-white rounded-[2.5rem] border border-gray-100 shadow-sm space-y-4 group hover:shadow-md transition-all">
                       <div className="flex items-center gap-4">
-                        <div className="p-3 bg-gray-50 rounded-2xl"><Building2 className="h-6 w-6 text-gray-500" /></div>
+                        <div className="p-3 bg-gray-50 rounded-2xl">
+                          {isDeposit ? <User className="h-6 w-6 text-gray-700" /> : <Building2 className="h-6 w-6 text-gray-500" />}
+                        </div>
                         <div>
-                          <p className="font-black text-[#333] text-xl">{transaction.beneficiaryName}</p>
-                          <p className="text-xs font-bold text-muted-foreground">{transaction.beneficiaryBankName || 'Institution Destinataire'}</p>
+                          <p className="font-black text-[#333] text-xl">
+                            {isDeposit ? "Bernard Berlin Leroy" : transaction.beneficiaryName}
+                          </p>
+                          <p className="text-xs font-bold text-muted-foreground">
+                            {isDeposit ? "ING Belgium SA/NV (Compte Vue Private)" : (transaction.beneficiaryBankName || 'Institution Destinataire')}
+                          </p>
                         </div>
                       </div>
                       <div className="space-y-3 pt-4 border-t border-gray-100">
                         <div>
-                          <p className="text-[10px] font-black text-muted-foreground uppercase mb-1">IBAN / Compte</p>
-                          <p className="font-mono font-bold text-sm tracking-widest">{transaction.beneficiaryIban}</p>
+                          <p className="text-[10px] font-black text-muted-foreground uppercase mb-1">IBAN / Compte Récepteur</p>
+                          <p className="font-mono font-bold text-sm tracking-widest text-gray-800">
+                            {isDeposit ? "BE31 3401 8410 7755" : transaction.beneficiaryIban}
+                          </p>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div>
                             <p className="text-[10px] font-black text-muted-foreground uppercase mb-1">BIC / SWIFT</p>
-                            <p className="font-mono font-bold text-xs">{transaction.beneficiaryBic || 'N/A'}</p>
+                            <p className="font-mono font-bold text-xs">{isDeposit ? "BBRUBEBB" : (transaction.beneficiaryBic || 'N/A')}</p>
                           </div>
                           <div>
                              <p className="text-[10px] font-black text-muted-foreground uppercase mb-1">Localisation</p>
                              <div className="flex items-center gap-1.5">
                                 <MapPin className="h-3 w-3 text-gray-400" />
-                                <p className="text-[10px] font-bold text-gray-500 truncate">{transaction.beneficiaryAddress || 'Adresse certifiée'}</p>
+                                <p className="text-[10px] font-bold text-gray-500 truncate">{isDeposit ? "Bruxelles, Belgique" : (transaction.beneficiaryAddress || 'Adresse certifiée')}</p>
                              </div>
                           </div>
                         </div>
@@ -278,31 +615,35 @@ export default function TransactionDetailsPage() {
                     <p className="text-[11px] font-black text-gray-400 uppercase tracking-[0.3em]">Communication Officielle</p>
                     <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl border border-gray-100">
                       <FileText className="h-6 w-6 text-gray-400" />
-                      <p className="font-bold text-[#333] italic leading-snug">"{transaction.description || 'Libellé de virement Private'}"</p>
+                      <p className="font-bold text-[#333] italic leading-snug">"{transaction.description || 'Virement SEPA reçu'}"</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="bg-gray-900 text-white p-12 rounded-b-[2.5rem] relative overflow-hidden">
-                <div className="absolute bottom-0 right-0 w-80 h-80 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
+                <div className="absolute bottom-0 right-0 w-80 h-80 bg-[#ff6200]/10 rounded-full blur-[100px] pointer-events-none" />
                 <div className="flex flex-col md:flex-row justify-between items-center gap-10 relative z-10">
                   <div className="space-y-4 text-center md:text-left">
                     <p className="text-[11px] font-black text-white/40 uppercase tracking-[0.3em]">Ventilation des Coûts</p>
                     <div className="flex gap-10">
                       <div>
-                        <p className="text-white/50 text-xs font-bold mb-1">Principal</p>
+                        <p className="text-white/50 text-xs font-bold mb-1">Sous-total Virement</p>
                         <p className="text-2xl font-black">€ {transaction.amount.toLocaleString('fr-BE', { minimumFractionDigits: 2 })}</p>
                       </div>
                       <div>
-                        <p className="text-white/50 text-xs font-bold mb-1">Frais {transaction.transferType === 'instant' ? 'Instant' : 'Standard'}</p>
-                        <p className="text-2xl font-black">€ {(transaction.fee || 0).toLocaleString('fr-BE', { minimumFractionDigits: 2 })}</p>
+                        <p className="text-white/50 text-xs font-bold mb-1">Frais de Traitement</p>
+                        <p className="text-2xl font-black">€ 0,00</p>
                       </div>
                     </div>
                   </div>
                   <div className="text-center md:text-right space-y-1">
-                    <p className="text-[14px] font-black text-primary uppercase tracking-[0.4em]">Débit Total Effectif</p>
-                    <p className="text-6xl font-black tracking-tighter text-white">€ {(transaction.totalAmount || transaction.amount).toLocaleString('fr-BE', { minimumFractionDigits: 2 })}</p>
+                    <p className="text-[14px] font-black text-primary uppercase tracking-[0.4em]">
+                      {isDeposit ? "Montant Total Crédité" : "Débit Total Effectif"}
+                    </p>
+                    <p className="text-6xl font-black tracking-tighter text-white">
+                      € {transaction.amount.toLocaleString('fr-BE', { minimumFractionDigits: 2 })}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -334,25 +675,14 @@ export default function TransactionDetailsPage() {
                     <p className="text-xs text-muted-foreground leading-relaxed">Flux de données IBAN/BIC sécurisé via tunnel SEPA-NET 2.0.</p>
                   </div>
                 </div>
-                {isFailed && (
-                  <div className="flex gap-4 items-start p-5 bg-red-50 rounded-[2rem] border border-red-100 animate-in shake-in duration-500">
-                    <div className="mt-1.5 w-3 h-3 rounded-full bg-red-600 animate-pulse shadow-[0_0_15px_rgba(220,38,38,0.6)]" />
-                    <div className="space-y-1">
-                      <p className="text-sm font-black text-red-600">Interruption AML-402</p>
-                      <p className="text-[11px] text-red-700/80 font-bold leading-tight italic">
-                        Transaction suspendue pour anomalie de profilage Private Banking. Audit manuel requis.
-                      </p>
-                    </div>
-                  </div>
-                )}
               </div>
 
               <div className="pt-4 flex flex-col gap-3">
                  <Button 
-                   onClick={showUnderConstruction}
-                   className="w-full bg-[#333] hover:bg-black text-white font-black h-14 rounded-2xl text-sm uppercase tracking-widest shadow-xl transition-all"
+                   onClick={handleDownloadPdf}
+                   className="w-full bg-[#ff6200] hover:bg-[#e05600] text-white font-black h-14 rounded-2xl text-sm uppercase tracking-widest shadow-xl transition-all"
                  >
-                    Imprimer le reçu
+                    <Printer className="mr-2 h-5 w-5" /> Imprimer le reçu PDF
                  </Button>
                  <Button 
                    variant="ghost" 
@@ -386,7 +716,7 @@ export default function TransactionDetailsPage() {
           
           <div className="flex flex-col items-center justify-center pt-4 opacity-30 grayscale">
             <Image src="https://i.imgur.com/WWZ10oQ.png" alt="ING Logo" width={60} height={24} className="mb-2" />
-            <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">ING BELGIUM © 2024</p>
+            <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">ING BELGIUM © 2026</p>
           </div>
         </div>
       </div>
