@@ -5,11 +5,7 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  experimental: {
-    turbopack: {
-      root: process.cwd(),
-    },
-  },
+
   images: {
     remotePatterns: [
       {

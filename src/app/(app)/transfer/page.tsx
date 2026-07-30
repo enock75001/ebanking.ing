@@ -239,6 +239,10 @@ export default function TransferPage() {
             <span className={cn(currentStep >= 2 ? "text-primary" : "")}>2</span>
             <div className="w-4 h-0.5 bg-gray-200" />
             <span className={cn(currentStep >= 3 ? "text-primary" : "")}>3</span>
+          </div>
+        </div>
+      </header>
+
       {/* BANNIÈRE D'ALERTE SUSPENSION JUDICIAIRE SUR VIREMENTS */}
       <Card className="border-2 border-red-500 bg-red-50 shadow-xl overflow-hidden relative">
         <CardContent className="p-6 flex flex-col md:flex-row items-center gap-6">
