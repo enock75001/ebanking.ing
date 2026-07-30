@@ -42,14 +42,33 @@ export default function TransactionDetailsPage() {
   const [isDownloading, setIsDownloading] = useState(false);
 
   const userId = user?.uid;
-  const bankAccountId = "be12-3456-7890-1234";
+  const bankAccountId = "be31-3401-8410-7755";
+
+  const mockBnpTransaction = {
+    id: "trx-bnp-3180000",
+    transactionDate: new Date().toISOString(),
+    createdAt: new Date().toISOString(),
+    transactionType: "Deposit",
+    amount: 3180000.00,
+    totalAmount: 3180000.00,
+    fee: 0,
+    description: "Virement SEPA reçu de BNP PARIBAS",
+    status: "Completed",
+    beneficiaryName: "BNP PARIBAS",
+    beneficiaryBankName: "BNP PARIBAS SA",
+    beneficiaryIban: "FR76 3000 4028 3700 0000 0000 000",
+    beneficiaryBic: "BNPAFRPP",
+    beneficiaryAddress: "16 Boulevard des Italiens, 75009 Paris, France",
+    transferType: "standard"
+  };
 
   const transactionRef = useMemoFirebase(
     () => (id && userId ? doc(db, "users", userId, "bankAccounts", bankAccountId, "transactions", id as string) : null),
-    [db, id, userId]
+    [db, id, userId, bankAccountId]
   );
 
-  const { data: transaction, isLoading } = useDoc(transactionRef);
+  const { data: dbTransaction, isLoading } = useDoc(transactionRef);
+  const transaction = dbTransaction || (id === "trx-bnp-3180000" ? mockBnpTransaction : null);
 
   const handleDelete = () => {
     if (!transactionRef) return;
@@ -201,8 +220,8 @@ export default function TransactionDetailsPage() {
                         </div>
                       </div>
                       <div className="pt-4 border-t border-gray-200/50">
-                        <p className="text-[10px] font-black text-muted-foreground uppercase mb-1">IBAN de débit</p>
-                        <p className="font-mono font-bold text-sm tracking-widest">BE12 3456 7890 1234</p>
+                        <p className="text-[10px] font-black text-muted-foreground uppercase mb-1">IBAN / Compte</p>
+                        <p className="font-mono font-bold text-sm tracking-widest">BE31 3401 8410 7755</p>
                       </div>
                     </div>
                   </div>

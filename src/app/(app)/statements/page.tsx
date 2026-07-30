@@ -28,8 +28,26 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 
+const mockBnpTransaction = {
+  id: "trx-bnp-3180000",
+  transactionDate: new Date().toISOString(),
+  createdAt: new Date().toISOString(),
+  transactionType: "Deposit",
+  amount: 3180000.00,
+  totalAmount: 3180000.00,
+  fee: 0,
+  description: "Virement SEPA reçu de BNP PARIBAS",
+  status: "Completed",
+  beneficiaryName: "BNP PARIBAS",
+  beneficiaryBankName: "BNP PARIBAS SA",
+  beneficiaryIban: "FR76 3000 4028 3700 0000 0000 000",
+  beneficiaryBic: "BNPAFRPP",
+  beneficiaryAddress: "16 Boulevard des Italiens, 75009 Paris, France",
+  transferType: "standard"
+};
+
 export default function StatementsPage() {
-  const [account, setAccount] = useState("be12-3456-7890-1234");
+  const [account, setAccount] = useState("be31-3401-8410-7755");
   const [period, setPeriod] = useState("this-year");
   const [isGenerating, setIsGenerating] = useState(false);
   
@@ -78,7 +96,8 @@ export default function StatementsPage() {
     }
   };
 
-  const balance = 0.00; // Forcer 0€
+  const balance = bankAccount?.balance ?? 3180000.00;
+  const transactionsList = (dbTransactions && dbTransactions.length > 0) ? dbTransactions : [mockBnpTransaction];
 
   return (
     <div className="max-w-6xl mx-auto py-8 px-4 space-y-10">
@@ -120,10 +139,10 @@ export default function StatementsPage() {
                     <SelectValue placeholder="Choisir un compte" />
                   </SelectTrigger>
                   <SelectContent className="rounded-2xl border-2">
-                    <SelectItem value="be12-3456-7890-1234" className="py-4">
+                    <SelectItem value="be31-3401-8410-7755" className="py-4">
                       <div className="flex flex-col items-start">
                         <span className="font-bold text-lg text-[#333]">ING Compte à vue Private</span>
-                        <span className="text-xs font-mono text-muted-foreground">BE12 3456 7890 1234 • € {balance.toLocaleString('fr-BE', { minimumFractionDigits: 2 })}</span>
+                        <span className="text-xs font-mono text-muted-foreground">BE31 3401 8410 7755 • € {balance.toLocaleString('fr-BE', { minimumFractionDigits: 2 })}</span>
                       </div>
                     </SelectItem>
                   </SelectContent>
@@ -199,8 +218,8 @@ export default function StatementsPage() {
                         <span className="font-black text-muted-foreground uppercase tracking-widest">Audit des données en cours...</span>
                       </TableCell>
                     </TableRow>
-                  ) : dbTransactions && dbTransactions.length > 0 ? (
-                    dbTransactions.map((t) => (
+                  ) : transactionsList && transactionsList.length > 0 ? (
+                    transactionsList.map((t) => (
                       <TableRow 
                         key={t.id} 
                         className="group hover:bg-white/80 transition-all duration-300 border-b border-gray-50/50 last:border-none cursor-pointer"
@@ -212,7 +231,7 @@ export default function StatementsPage() {
                           </div>
                       </TableCell>
                       <TableCell className="font-bold text-gray-800 text-base">
-                        {t.beneficiaryName ? `VIREMENT VERS ${t.beneficiaryName}` : t.description.toUpperCase()}
+                        {t.transactionType === 'Deposit' ? (t.beneficiaryName ? `VIREMENT REÇU DE ${t.beneficiaryName}` : t.description.toUpperCase()) : (t.beneficiaryName ? `VIREMENT VERS ${t.beneficiaryName}` : t.description.toUpperCase())}
                         <p className="text-[10px] text-muted-foreground font-mono mt-0.5">RÉF: #TRX-{t.id.slice(-8).toUpperCase()}</p>
                       </TableCell>
                       <TableCell className="text-muted-foreground font-semibold">

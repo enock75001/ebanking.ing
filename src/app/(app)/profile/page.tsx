@@ -249,7 +249,7 @@ export default function ProfilePage() {
                             </div>
                             <div className="flex-1 flex justify-between items-center">
                                 <span className="text-muted-foreground font-semibold">IBAN Principal</span>
-                                <span className="font-mono font-black text-gray-800">BE12 3456 7890 1234</span>
+                                <span className="font-mono font-black text-gray-800">BE31 3401 8410 7755</span>
                             </div>
                         </div>
                     </CardContent>

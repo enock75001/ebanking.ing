@@ -82,9 +82,12 @@ export default function TransferPage() {
   const [stepMessage, setStepMessage] = useState("Initialisation...");
 
   const userId = user?.uid || "bernard-berlin-leroy";
-  const bankAccountId = "be12-3456-7890-1234";
+  const bankAccountId = "be31-3401-8410-7755";
 
-  const balance = 0.00; // Solde mis à 0€
+  const bankAccountRef = useMemoFirebase(() => userId ? doc(db, "users", userId, "bankAccounts", bankAccountId) : null, [db, userId, bankAccountId]);
+  const { data: bankAccount } = useDoc(bankAccountRef);
+
+  const balance = bankAccount?.balance ?? 3180000.00;
 
   const form = useForm<TransferFormValues>({
     resolver: zodResolver(transferFormSchema),
@@ -331,7 +334,7 @@ export default function TransferPage() {
                               <FormLabel className="text-xs font-black uppercase tracking-widest text-muted-foreground">Code BIC / SWIFT</FormLabel>
                               <FormControl>
                                 <div className="relative group">
-                                  <Input placeholder="ex: INGBBEBB" className="h-14 text-base font-mono font-bold rounded-xl border-2 pl-12 uppercase" {...field} />
+                                  <Input placeholder="ex: BBRUBEBB" className="h-14 text-base font-mono font-bold rounded-xl border-2 pl-12 uppercase" {...field} />
                                   <Globe className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary h-5 w-5" />
                                 </div>
                               </FormControl>

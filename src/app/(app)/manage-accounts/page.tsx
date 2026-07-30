@@ -10,8 +10,8 @@ export default function ManageAccountsPage() {
     const { toast } = useToast();
     const accountDetails = {
         holder: "BERNARD BERLIN LEROY",
-        iban: "BE12 3456 7890 1234",
-        bic: "INGBBEBB",
+        iban: "BE31 3401 8410 7755",
+        bic: "BBRUBEBB",
         bank: "ING Belgium SA/NV",
         address: "Avenue Marnix 24, B-1000 Bruxelles",
         type: "Compte à vue Private",

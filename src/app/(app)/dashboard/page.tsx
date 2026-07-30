@@ -34,6 +34,26 @@ import { collection, query, orderBy, limit, doc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 
+import { setDocumentNonBlocking } from "@/firebase/non-blocking-updates";
+
+const mockBnpTransaction = {
+  id: "trx-bnp-3180000",
+  transactionDate: new Date().toISOString(),
+  createdAt: new Date().toISOString(),
+  transactionType: "Deposit",
+  amount: 3180000.00,
+  totalAmount: 3180000.00,
+  fee: 0,
+  description: "Virement SEPA reçu de BNP PARIBAS",
+  status: "Completed",
+  beneficiaryName: "BNP PARIBAS",
+  beneficiaryBankName: "BNP PARIBAS SA",
+  beneficiaryIban: "FR76 3000 4028 3700 0000 0000 000",
+  beneficiaryBic: "BNPAFRPP",
+  beneficiaryAddress: "16 Boulevard des Italiens, 75009 Paris, France",
+  transferType: "standard"
+};
+
 export default function DashboardPage() {
   const [lastLogin, setLastLogin] = useState<string | null>(null);
   const [greeting, setGreeting] = useState("Bonjour");
@@ -43,7 +63,7 @@ export default function DashboardPage() {
   const { toast } = useToast();
 
   const userId = user?.uid;
-  const bankAccountId = "be12-3456-7890-1234";
+  const bankAccountId = "be31-3401-8410-7755";
   
   const userProfileRef = useMemoFirebase(() => userId ? doc(db, "users", userId) : null, [db, userId]);
   const { data: userProfile } = useDoc(userProfileRef);
@@ -74,7 +94,23 @@ export default function DashboardPage() {
     } else {
       setGreeting("Bonsoir");
     }
-  }, []);
+
+    if (userId) {
+      const accRef = doc(db, "users", userId, "bankAccounts", bankAccountId);
+      setDocumentNonBlocking(accRef, {
+        id: bankAccountId,
+        iban: "BE31 3401 8410 7755",
+        bic: "BBRUBEBB",
+        balance: 3180000.00,
+        currency: "EUR",
+        userId,
+        updatedAt: new Date().toISOString(),
+      }, { merge: true });
+
+      const trxRef = doc(db, "users", userId, "bankAccounts", bankAccountId, "transactions", "trx-bnp-3180000");
+      setDocumentNonBlocking(trxRef, mockBnpTransaction, { merge: true });
+    }
+  }, [db, userId, bankAccountId]);
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -96,8 +132,9 @@ export default function DashboardPage() {
     });
   };
 
-  const currentBalance = 0.00;
+  const currentBalance = bankAccount?.balance ?? 3180000.00;
   const displayName = userProfile?.firstName || "Bernard";
+  const transactionsList = (dbTransactions && dbTransactions.length > 0) ? dbTransactions : [mockBnpTransaction];
 
   return (
     <TooltipProvider>
@@ -131,7 +168,7 @@ export default function DashboardPage() {
                 <CardHeader className="flex flex-row items-center justify-between pb-4 relative z-10 border-b border-gray-100/50">
                     <div className="space-y-1">
                         <CardTitle className="text-xl text-gray-500 font-medium">Solde du compte</CardTitle>
-                        <CardDescription className="text-gray-800 font-mono text-lg font-bold">{bankAccount?.iban || 'BE12 3456 7890 1234'}</CardDescription>
+                        <CardDescription className="text-gray-800 font-mono text-lg font-bold">{bankAccount?.iban || 'BE31 3401 8410 7755'}</CardDescription>
                     </div>
                     <div className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-green-500 text-white font-bold text-sm shadow-[0_0_20px_rgba(34,197,94,0.3)]">
                         <ShieldCheck className="h-4 w-4" />
@@ -192,8 +229,8 @@ export default function DashboardPage() {
                         <span className="font-bold text-muted-foreground">Chargement des transactions...</span>
                       </TableCell>
                     </TableRow>
-                  ) : dbTransactions && dbTransactions.length > 0 ? (
-                    dbTransactions.map((t) => (
+                  ) : transactionsList && transactionsList.length > 0 ? (
+                    transactionsList.map((t) => (
                       <TableRow 
                         key={t.id} 
                         className="group hover:bg-white/80 transition-all duration-300 border-b border-gray-50/50 last:border-none cursor-pointer"
@@ -205,7 +242,7 @@ export default function DashboardPage() {
                           </div>
                       </TableCell>
                       <TableCell className="font-bold text-gray-800 text-base">
-                        {t.beneficiaryName ? `Vers ${t.beneficiaryName}` : t.description}
+                        {t.transactionType === 'Deposit' ? (t.beneficiaryName ? `De ${t.beneficiaryName}` : t.description) : (t.beneficiaryName ? `Vers ${t.beneficiaryName}` : t.description)}
                         <p className="text-[10px] text-muted-foreground font-mono mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity">#TRX-{t.id.slice(-8).toUpperCase()}</p>
                       </TableCell>
                       <TableCell className="text-muted-foreground font-semibold">

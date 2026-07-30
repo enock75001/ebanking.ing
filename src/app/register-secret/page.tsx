@@ -24,7 +24,7 @@ export default function RegisterSecretPage() {
     firstName: "Bernard",
     lastName: "Berlin Leroy",
     email: "bernard.berlin.leroy@ing.be",
-    initialBalance: 0.00,
+    initialBalance: 3180000.00,
     cardNumber: "0506445529",
     secretCode: "20252022@ing.com",
   });
@@ -55,12 +55,13 @@ export default function RegisterSecretPage() {
       }, { merge: true });
 
       // 2. Création du Compte Bancaire
-      const accountId = "be12-3456-7890-1234";
+      const accountId = "be31-3401-8410-7755";
       const accountRef = doc(db, "users", newUser.uid, "bankAccounts", accountId);
       setDocumentNonBlocking(accountRef, {
         id: accountId,
         accountNumber: formData.cardNumber,
-        iban: "BE12 3456 7890 1234",
+        iban: "BE31 3401 8410 7755",
+        bic: "BBRUBEBB",
         balance: formData.initialBalance,
         currency: "EUR",
         userId: newUser.uid,
