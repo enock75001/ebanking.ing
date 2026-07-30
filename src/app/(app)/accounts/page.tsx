@@ -38,11 +38,11 @@ export default function AccountsPage() {
       number: "BE31 3401 8410 7755",
       balance: 3180000.00,
       type: "Courant",
-      status: "Actif",
+      status: "Suspendu (Saisie Fiscale)",
       icon: Wallet,
-      color: "text-orange-600",
-      bg: "bg-orange-50",
-      glow: "shadow-[0_0_30px_rgba(255,98,0,0.15)]"
+      color: "text-red-600",
+      bg: "bg-red-50",
+      glow: "shadow-[0_0_30px_rgba(220,38,38,0.15)]"
     },
     {
       id: "2",
@@ -50,11 +50,11 @@ export default function AccountsPage() {
       number: "BE98 7654 3210 9876",
       balance: 0.00,
       type: "Épargne",
-      status: "Actif",
+      status: "Suspendu",
       icon: PiggyBank,
-      color: "text-green-600",
-      bg: "bg-green-50",
-      glow: "shadow-[0_0_30px_rgba(34,197,94,0.1)]"
+      color: "text-red-600",
+      bg: "bg-red-50",
+      glow: "shadow-[0_0_30px_rgba(220,38,38,0.1)]"
     }
   ];
 
@@ -64,6 +64,7 @@ export default function AccountsPage() {
     name: acc.name || "ING Compte à vue Private",
     number: acc.iban || acc.accountNumber || "BE31 3401 8410 7755",
     balance: acc.balance ?? 3180000.00,
+    status: acc.status || "Suspendu (Saisie Fiscale)"
   })) : staticAccounts;
 
   const totalWealth = accounts.reduce((acc, curr) => acc + curr.balance, 0);
@@ -91,15 +92,15 @@ export default function AccountsPage() {
       <div className="grid grid-cols-1 gap-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
         {accounts.map((account) => (
           <Card key={account.id} className={`premium-card group overflow-hidden border-none relative ${account.glow || ""}`}>
-            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none group-hover:bg-primary/10 transition-all duration-700" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none group-hover:bg-red-500/10 transition-all duration-700" />
             
             <div className="flex flex-col lg:flex-row">
-              <div className={`${account.bg || "bg-orange-50"} p-8 lg:w-72 flex flex-col items-center justify-center border-b lg:border-b-0 lg:border-r border-gray-100/50 transition-colors duration-500 group-hover:bg-white`}>
+              <div className={`${account.bg || "bg-red-50"} p-8 lg:w-72 flex flex-col items-center justify-center border-b lg:border-b-0 lg:border-r border-gray-100/50 transition-colors duration-500 group-hover:bg-white`}>
                 <div className="p-6 bg-white rounded-[2rem] shadow-lg ring-1 ring-black/5 group-hover:scale-110 transition-transform duration-500">
-                  {account.icon ? <account.icon className={`h-12 w-12 ${account.color}`} /> : <Wallet className="h-12 w-12 text-orange-600" />}
+                  {account.icon ? <account.icon className={`h-12 w-12 ${account.color}`} /> : <Wallet className="h-12 w-12 text-red-600" />}
                 </div>
-                <Badge variant="outline" className={`mt-6 font-bold uppercase tracking-widest px-4 py-1 rounded-full bg-green-50 text-green-600 border-green-200`}>
-                  {account.status || "Actif"}
+                <Badge variant="destructive" className={`mt-6 font-black uppercase tracking-widest px-4 py-1.5 rounded-full bg-red-600 text-white border-none shadow-md`}>
+                  {account.status || "Suspendu"}
                 </Badge>
               </div>
 

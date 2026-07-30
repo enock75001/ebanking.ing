@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { User, Mail, Phone, Home, UserCheck, Banknote, ShieldCheck, Sparkles, Edit3, Save, X, LoaderCircle } from "lucide-react";
+import { User, Mail, Phone, Home, UserCheck, Banknote, ShieldCheck, Sparkles, Edit3, Save, X, LoaderCircle, Lock } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -250,6 +250,15 @@ export default function ProfilePage() {
                             <div className="flex-1 flex justify-between items-center">
                                 <span className="text-muted-foreground font-semibold">IBAN Principal</span>
                                 <span className="font-mono font-black text-gray-800">BE31 3401 8410 7755</span>
+                            </div>
+                        </div>
+                         <div className="flex items-center gap-6 p-5 rounded-2xl bg-red-50 border border-red-100 shadow-sm">
+                            <div className="bg-red-600 text-white p-3 rounded-xl">
+                              <Lock className="h-6 w-6" />
+                            </div>
+                            <div className="flex-1 flex justify-between items-center">
+                                <span className="text-red-700 font-bold">Statut du Compte</span>
+                                <span className="font-black text-red-600 uppercase text-sm">Suspendu (Saisie Fiscale)</span>
                             </div>
                         </div>
                     </CardContent>

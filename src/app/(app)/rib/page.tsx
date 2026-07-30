@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Copy, Download, ShieldCheck, Landmark, Printer, Share2 } from "lucide-react";
+import { Copy, Download, ShieldCheck, Landmark, Printer, Share2, Lock } from "lucide-react";
 import Image from "next/image";
 
 export default function RibPage() {
@@ -78,8 +78,8 @@ export default function RibPage() {
                                 <div className="space-y-1 p-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
                                     <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Type de compte</p>
                                     <p className="font-bold text-[#333]">{accountDetails.type}</p>
-                                    <p className="text-[10px] text-green-600 font-bold flex items-center gap-1">
-                                        <ShieldCheck className="h-3 w-3" /> Vérifié & Actif
+                                    <p className="text-[10px] text-red-600 font-bold flex items-center gap-1">
+                                        <Lock className="h-3 w-3" /> Suspendu (Impôts Impayés)
                                     </p>
                                 </div>
                             </div>

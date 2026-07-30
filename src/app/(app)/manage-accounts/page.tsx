@@ -16,7 +16,7 @@ export default function ManageAccountsPage() {
         address: "Avenue Marnix 24, B-1000 Bruxelles",
         type: "Compte à vue Private",
         openingDate: "15/03/2026",
-        status: "Actif"
+        status: "Suspendu (Procédure Judiciaire)"
     };
 
     const handleCopy = () => {

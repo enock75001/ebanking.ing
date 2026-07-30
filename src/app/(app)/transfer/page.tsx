@@ -39,7 +39,9 @@ import {
   FileText,
   Globe,
   MapPin,
-  Landmark
+  Landmark,
+  Lock,
+  ShieldAlert
 } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
@@ -237,9 +239,26 @@ export default function TransferPage() {
             <span className={cn(currentStep >= 2 ? "text-primary" : "")}>2</span>
             <div className="w-4 h-0.5 bg-gray-200" />
             <span className={cn(currentStep >= 3 ? "text-primary" : "")}>3</span>
+      {/* BANNIÈRE D'ALERTE SUSPENSION JUDICIAIRE SUR VIREMENTS */}
+      <Card className="border-2 border-red-500 bg-red-50 shadow-xl overflow-hidden relative">
+        <CardContent className="p-6 flex flex-col md:flex-row items-center gap-6">
+          <div className="bg-red-600 text-white p-4 rounded-2xl shadow-lg shrink-0">
+            <Lock className="h-8 w-8 animate-pulse" />
           </div>
-        </div>
-      </header>
+          <div className="space-y-1 text-center md:text-left">
+            <div className="flex items-center gap-2 justify-center md:justify-start">
+              <Badge variant="destructive" className="font-black uppercase text-[10px] tracking-widest bg-red-600 text-white px-3 py-1">
+                EXÉCUTION DES VIREMENTS IMPOSSIBLE
+              </Badge>
+              <span className="text-xs font-mono font-bold text-red-800 bg-red-100 px-2 py-0.5 rounded">RÉF: SATD-2026-99412-IMP</span>
+            </div>
+            <h3 className="text-lg font-black text-red-900">Compte suspendu par l'Administration Fiscale (Impôts Impayés)</h3>
+            <p className="text-xs font-semibold text-red-800 leading-relaxed max-w-3xl">
+              Votre compte bancaire fait l'objet d'une saisie conservatoire pour impôts impayés. Il est strictement interdit d'effectuer des retraits ou des mouvements de fonds. Les virements sortants sont bloqués jusqu'à la fin de la procédure judiciaire.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
 
       <Form {...form}>
         <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">

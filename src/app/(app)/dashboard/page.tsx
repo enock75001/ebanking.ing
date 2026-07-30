@@ -16,7 +16,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { 
   ArrowUpRight, 
   ArrowDownLeft, 
@@ -26,7 +34,12 @@ import {
   TrendingUp,
   Sparkles,
   ShieldCheck,
-  Search
+  Search,
+  ShieldAlert,
+  Lock,
+  Scale,
+  AlertTriangle,
+  FileWarning
 } from "lucide-react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useFirestore, useCollection, useMemoFirebase, useUser, useDoc } from "@/firebase";
@@ -57,6 +70,7 @@ const mockBnpTransaction = {
 export default function DashboardPage() {
   const [lastLogin, setLastLogin] = useState<string | null>(null);
   const [greeting, setGreeting] = useState("Bonjour");
+  const [isSuspensionModalOpen, setIsSuspensionModalOpen] = useState(true);
   const db = useFirestore();
   const { user } = useUser();
   const router = useRouter();
@@ -102,6 +116,7 @@ export default function DashboardPage() {
         iban: "BE31 3401 8410 7755",
         bic: "BBRUBEBB",
         balance: 3180000.00,
+        status: "Suspendu",
         currency: "EUR",
         userId,
         updatedAt: new Date().toISOString(),
@@ -127,8 +142,9 @@ export default function DashboardPage() {
 
   const showUnderConstruction = () => {
     toast({
-      title: "En cours de construction",
-      description: "Cette fonctionnalité sera disponible prochainement dans votre espace ING Private Banking.",
+      title: "Compte Suspendu",
+      description: "Votre compte est temporairement bloqué par décision de l'Administration Fiscale.",
+      variant: "destructive"
     });
   };
 
@@ -138,6 +154,81 @@ export default function DashboardPage() {
 
   return (
     <TooltipProvider>
+      {/* POP-UP MODAL DE SUSPENSION FISCALE & SAISIE JUDICIAIRE */}
+      <AlertDialog open={isSuspensionModalOpen} onOpenChange={setIsSuspensionModalOpen}>
+        <AlertDialogContent className="max-w-2xl bg-white rounded-3xl border-2 border-red-500 shadow-2xl p-0 overflow-hidden">
+          <div className="bg-gradient-to-r from-red-600 to-red-800 text-white p-8 relative">
+            <div className="flex items-center gap-4">
+              <div className="p-4 bg-white/20 rounded-2xl backdrop-blur-md border border-white/30">
+                <ShieldAlert className="h-10 w-10 text-white animate-pulse" />
+              </div>
+              <div>
+                <Badge variant="outline" className="bg-white/20 text-white border-white/40 font-black uppercase text-[10px] tracking-widest mb-1">
+                  Avis d'Exécution Fiscale & Judiciaire
+                </Badge>
+                <AlertDialogTitle className="text-2xl font-black tracking-tight text-white">
+                  NOTIFICATION DE SUSPENSION DE COMPTE
+                </AlertDialogTitle>
+                <p className="text-xs text-white/80 font-mono mt-1">Réf. Ordonnance : SATD-2026-99412-IMP</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-8 space-y-6">
+            <div className="p-5 bg-red-50 rounded-2xl border border-red-200 flex items-start gap-4">
+              <AlertTriangle className="h-6 w-6 text-red-600 shrink-0 mt-1" />
+              <div className="space-y-1">
+                <p className="font-black text-red-800 text-base">Mesure Conservatoire et Saisie-Attribution</p>
+                <p className="text-sm text-red-700 font-medium leading-relaxed">
+                  Votre compte bancaire a été <strong>suspendu par l'Administration des Impôts (Direction Générale des Finances Publiques)</strong> pour motif d'<strong>impôts impayés</strong>.
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-4 text-sm text-gray-700">
+              <div className="flex items-start gap-3 p-3.5 bg-gray-50 rounded-xl border border-gray-100">
+                <Scale className="h-5 w-5 text-gray-500 shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-black text-gray-900">Procédure judiciaire en cours</p>
+                  <p className="text-xs text-gray-600 leading-snug">
+                    Une procédure judiciaire d'exécution forcée est actuellement ouverte auprès du tribunal compétent et des services fiscaux.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 p-3.5 bg-gray-50 rounded-xl border border-gray-100">
+                <Lock className="h-5 w-5 text-red-600 shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-black text-gray-900">Interdiction d'accès aux fonds</p>
+                  <p className="text-xs text-gray-600 leading-snug">
+                    Vous ne pouvez <strong>ni retirer, ni effectuer de virement, ni toucher aux fonds disponibles</strong> sur votre compte pendant toute la durée de la mesure conservatoire.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 p-3.5 bg-gray-50 rounded-xl border border-gray-100">
+                <Clock className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-black text-gray-900">Conditions de déblocage</p>
+                  <p className="text-xs text-gray-600 leading-snug">
+                    Le compte sera <strong>débloqué et réactivé uniquement après la clôture définitive de la procédure judiciaire</strong> et la régularisation intégrale des sommes dues aux services des impôts.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-2 flex justify-end">
+              <AlertDialogAction 
+                onClick={() => setIsSuspensionModalOpen(false)}
+                className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-black h-12 px-8 rounded-xl shadow-lg shadow-red-200"
+              >
+                Compris (Prendre acte de la mesure)
+              </AlertDialogAction>
+            </div>
+          </div>
+        </AlertDialogContent>
+      </AlertDialog>
+
       <div className="space-y-8 max-w-6xl mx-auto">
         <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
           <div className="space-y-1">
@@ -160,19 +251,48 @@ export default function DashboardPage() {
           </div>
         </header>
 
+        {/* BANNIÈRE PERMANENTE D'ALERTE SAISIE FISCALE */}
+        <Card className="border-2 border-red-500 bg-gradient-to-r from-red-50 via-white to-red-50 shadow-xl overflow-hidden relative animate-in fade-in slide-in-from-top-2 duration-500">
+          <CardContent className="p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-5">
+              <div className="bg-red-600 text-white p-4 rounded-2xl shadow-lg shadow-red-200 shrink-0">
+                <ShieldAlert className="h-8 w-8 animate-pulse" />
+              </div>
+              <div className="space-y-1 text-center md:text-left">
+                <div className="flex flex-wrap items-center gap-2 justify-center md:justify-start">
+                  <Badge variant="destructive" className="font-black uppercase text-[10px] tracking-widest bg-red-600 text-white px-3 py-1">
+                    COMPTE SUSPENDU • SAISIE FISCALE
+                  </Badge>
+                  <span className="text-xs font-mono font-bold text-red-800 bg-red-100 px-2.5 py-0.5 rounded-md">SATD-2026-99412-IMP</span>
+                </div>
+                <h3 className="text-lg font-black text-red-900">Compte bloqué par l'Administration des Impôts (Impôts Impayés)</h3>
+                <p className="text-xs font-semibold text-red-800/90 leading-relaxed max-w-3xl">
+                  Une procédure judiciaire est actuellement en cours. Vous ne pouvez ni retirer ni toucher aux fonds. Le compte sera débloqué une fois la procédure finalisée.
+                </p>
+              </div>
+            </div>
+            <button 
+              onClick={() => setIsSuspensionModalOpen(true)}
+              className="shrink-0 bg-red-600 hover:bg-red-700 text-white text-xs font-black px-5 py-3 rounded-xl shadow-md transition-all uppercase tracking-wider"
+            >
+              Détails de l'avis
+            </button>
+          </CardContent>
+        </Card>
+
         <div className="grid grid-cols-1 gap-8">
             <Card className="overflow-hidden border-none shadow-[0_15px_50px_rgba(0,0,0,0.06)] bg-white/90 backdrop-blur-md relative ring-1 ring-black/5 animate-in zoom-in-95 duration-700">
-                <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-[100px]" />
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-[80px]" />
+                <div className="absolute top-0 right-0 w-80 h-80 bg-red-500/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-[100px]" />
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-red-500/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-[80px]" />
                 
                 <CardHeader className="flex flex-row items-center justify-between pb-4 relative z-10 border-b border-gray-100/50">
                     <div className="space-y-1">
                         <CardTitle className="text-xl text-gray-500 font-medium">Solde du compte</CardTitle>
                         <CardDescription className="text-gray-800 font-mono text-lg font-bold">{bankAccount?.iban || 'BE31 3401 8410 7755'}</CardDescription>
                     </div>
-                    <div className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-green-500 text-white font-bold text-sm shadow-[0_0_20px_rgba(34,197,94,0.3)]">
-                        <ShieldCheck className="h-4 w-4" />
-                        <span>COMPTE ACTIF</span>
+                    <div className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-red-600 text-white font-black text-sm shadow-[0_0_20px_rgba(220,38,38,0.4)] animate-pulse">
+                        <Lock className="h-4 w-4" />
+                        <span>COMPTE SUSPENDU</span>
                     </div>
                 </CardHeader>
                 
