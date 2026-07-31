@@ -100,35 +100,35 @@ export default function StatementsPage() {
   const transactionsList = (dbTransactions && dbTransactions.length > 0) ? dbTransactions : [mockBnpTransaction];
 
   return (
-    <div className="max-w-6xl mx-auto py-8 px-4 space-y-10">
-      <header className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
+    <div className="max-w-6xl mx-auto py-4 sm:py-8 px-2 sm:px-4 space-y-6 sm:space-y-10 w-full">
+      <header className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 sm:gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
         <div className="space-y-2">
-          <div className="flex items-center gap-4 mb-1">
-            <div className="bg-primary/10 p-3 rounded-2xl shadow-inner">
-              <FileText className="h-8 w-8 text-primary" />
+          <div className="flex items-center gap-3 sm:gap-4 mb-1">
+            <div className="bg-primary/10 p-2.5 sm:p-3 rounded-2xl shadow-inner shrink-0">
+              <FileText className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
             </div>
-            <h1 className="text-4xl font-extrabold tracking-tight text-[#333] font-headline">Relevés & Extraits</h1>
+            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[#333] font-headline">Relevés & Extraits</h1>
           </div>
-          <p className="text-gray-600 text-lg leading-relaxed max-w-2xl">
+          <p className="text-gray-600 text-sm sm:text-lg leading-relaxed max-w-2xl">
             Consultez votre historique et générez vos extraits de compte officiels Bernard Berlin Leroy.
           </p>
         </div>
-        <div className="bg-white/80 backdrop-blur-xl p-5 rounded-2xl border border-white shadow-xl ring-1 ring-black/5 flex items-center gap-3">
-            <ShieldCheck className="h-5 w-5 text-green-600" />
-            <span className="text-sm font-bold text-gray-500 uppercase tracking-widest">Documents certifiés</span>
+        <div className="bg-white/80 backdrop-blur-xl p-4 sm:p-5 rounded-2xl border border-white shadow-xl ring-1 ring-black/5 flex items-center gap-3 w-fit">
+            <ShieldCheck className="h-5 w-5 text-green-600 shrink-0" />
+            <span className="text-xs sm:text-sm font-bold text-gray-500 uppercase tracking-widest">Documents certifiés</span>
         </div>
       </header>
 
-      <div className="grid grid-cols-1 gap-10">
+      <div className="grid grid-cols-1 gap-6 sm:gap-10">
         <Card className="premium-card overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-700">
-          <CardHeader className="bg-gray-50/50 border-b border-gray-100/50 pb-8 px-8">
+          <CardHeader className="bg-gray-50/50 border-b border-gray-100/50 pb-6 sm:pb-8 px-4 sm:px-8">
             <div className="flex items-center gap-2">
               <Sparkles className="h-5 w-5 text-primary animate-pulse" />
-              <CardTitle className="text-2xl font-black text-[#333]">Critères de l'extrait</CardTitle>
+              <CardTitle className="text-xl sm:text-2xl font-black text-[#333]">Critères de l'extrait</CardTitle>
             </div>
-            <CardDescription className="text-base font-medium">Sélectionnez le compte et la période pour générer votre document.</CardDescription>
+            <CardDescription className="text-sm sm:text-base font-medium">Sélectionnez le compte et la période pour générer votre document.</CardDescription>
           </CardHeader>
-          <CardContent className="p-8 space-y-8">
+          <CardContent className="p-4 sm:p-8 space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-4">
                 <Label htmlFor="account" className="text-sm font-black uppercase tracking-widest text-muted-foreground flex items-center gap-2">
@@ -198,9 +198,9 @@ export default function StatementsPage() {
                 <Badge className="bg-green-50 text-green-700 border-green-100 font-bold px-4 py-1.5 rounded-full">{dbTransactions?.length || 0} Opérations</Badge>
               </div>
             </CardHeader>
-            <CardContent className="p-8">
-            <div className="rounded-[2rem] border border-gray-100/50 overflow-hidden shadow-inner bg-white/50">
-              <Table>
+            <CardContent className="p-3 sm:p-8">
+            <div className="rounded-[1.5rem] sm:rounded-[2rem] border border-gray-100/50 overflow-x-auto w-full shadow-inner bg-white/50">
+              <Table className="min-w-[600px] sm:min-w-full">
                   <TableHeader className="bg-gray-50/50">
                   <TableRow className="hover:bg-transparent border-none h-14">
                       <TableHead className="w-20"></TableHead>

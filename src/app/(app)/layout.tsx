@@ -139,27 +139,27 @@ export default function AppLayout({
           </div>
         </header>
 
-        <div className="flex flex-1 pt-16">
+        <div className="flex flex-1 pt-14 sm:pt-16 max-w-full">
           <AppSidebar />
           
-          <main className="flex-1 lg:ml-64 relative pb-32 min-h-screen">
-            <div className="p-4 sm:p-8">
+          <main className="flex-1 lg:ml-64 relative pb-12 lg:pb-32 min-h-screen w-full max-w-full overflow-x-hidden">
+            <div className="p-3 sm:p-6 lg:p-8 max-w-full">
               {children}
             </div>
           </main>
         </div>
 
         {/* Large Bande Orange Footer */}
-        <footer className="lg:ml-64 bg-[#ff6200] text-white py-12 px-6 mt-auto">
-          <div className="max-w-4xl mx-auto flex flex-col items-center gap-4">
-            <div className="flex gap-6 text-sm font-bold">
+        <footer className="lg:ml-64 bg-[#ff6200] text-white py-8 sm:py-12 px-4 sm:px-6 mt-auto w-full">
+          <div className="max-w-4xl mx-auto flex flex-col items-center gap-4 text-center">
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-6 text-xs sm:text-sm font-bold">
               <a href="#" onClick={showUnderConstruction} className="hover:underline">Contact Us</a>
-              <span className="opacity-50">|</span>
+              <span className="opacity-50 hidden sm:inline">|</span>
               <a href="#" onClick={showUnderConstruction} className="hover:underline">Privacy</a>
-              <span className="opacity-50">|</span>
+              <span className="opacity-50 hidden sm:inline">|</span>
               <a href="#" onClick={showUnderConstruction} className="hover:underline">Security</a>
             </div>
-            <p className="text-xs opacity-80 text-center">
+            <p className="text-[11px] sm:text-xs opacity-80 text-center leading-relaxed">
               © ING Bank (Australia) Limited ABN 24 000 893 292. Australian Credit Licence 224000 893 292.
             </p>
           </div>

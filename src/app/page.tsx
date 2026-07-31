@@ -62,17 +62,17 @@ export default function LoginPage() {
         />
       </div>
 
-      <header className="w-full p-6 flex justify-between items-center z-10 max-w-7xl mx-auto">
+      <header className="w-full p-4 sm:p-6 flex justify-between items-center z-10 max-w-7xl mx-auto">
         <div className="flex-1">
           <Image
             src="https://i.imgur.com/WWZ10oQ.png"
             alt="ING Logo"
             width={120}
             height={48}
-            className="h-10 w-auto"
+            className="h-8 sm:h-10 w-auto"
           />
         </div>
-        <div className="flex-1 flex justify-end gap-4 text-sm font-bold text-gray-400">
+        <div className="flex-1 flex justify-end gap-2 sm:gap-4 text-xs sm:text-sm font-bold text-gray-400">
           <button className="hover:text-primary transition-colors">NL</button>
           <span>|</span>
           <button className="text-primary underline decoration-2 underline-offset-4">FR</button>
@@ -81,17 +81,17 @@ export default function LoginPage() {
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col items-center justify-start pt-8 px-6 z-10 space-y-8 w-full mb-20">
+      <main className="flex-1 flex flex-col items-center justify-start pt-4 sm:pt-8 px-3 sm:px-6 z-10 space-y-6 sm:space-y-8 w-full mb-12 sm:mb-20">
         {loginMethod === 'qr' ? (
           <Card className="w-full max-w-xl border border-gray-200 ing-card-shadow bg-white rounded-md overflow-hidden transition-all duration-300">
-            <CardHeader className="pt-8 pb-4">
-              <CardTitle className="text-xl font-black text-[#ff6200] px-4 text-center">
+            <CardHeader className="pt-6 sm:pt-8 pb-3 sm:pb-4">
+              <CardTitle className="text-lg sm:text-xl font-black text-[#ff6200] px-2 sm:px-4 text-center">
                 Se connecter avec le code QR ING
               </CardTitle>
             </CardHeader>
-            <CardContent className="px-8 pb-8 text-sm">
+            <CardContent className="px-4 sm:px-8 pb-6 sm:pb-8 text-sm">
               <div className="flex flex-col md:flex-row gap-6 items-start mb-6">
-                <div className="flex-shrink-0 w-48 h-48 bg-gray-50 border border-gray-100 rounded-lg flex flex-col items-center justify-center relative overflow-hidden shadow-sm mx-auto md:mx-0">
+                <div className="flex-shrink-0 w-40 h-40 sm:w-48 sm:h-48 bg-gray-50 border border-gray-100 rounded-lg flex flex-col items-center justify-center relative overflow-hidden shadow-sm mx-auto md:mx-0">
                   <Image 
                     src="https://res.cloudinary.com/dlftfyudb/image/upload/v1773756428/t%C3%A9l%C3%A9charger_nlacn3.gif" 
                     alt="ING QR Code" 
@@ -99,7 +99,7 @@ export default function LoginPage() {
                     className="object-contain p-4"
                   />
                   <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px] z-10 rounded-lg" />
-                  <AlertTriangle className="h-12 w-12 text-[#ff6200] mb-3 z-20" />
+                  <AlertTriangle className="h-10 w-10 sm:h-12 sm:w-12 text-[#ff6200] mb-3 z-20" />
                   <Button className="ing-btn-blue z-20 font-bold px-4 h-9 rounded-sm text-xs">
                     Réessayer
                   </Button>
@@ -108,11 +108,11 @@ export default function LoginPage() {
                   <ol className="list space-y-4">
                     <li className="list__item flex gap-3 items-start">
                       <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 text-xs font-black mt-0.5">1</div>
-                      <p className="text-[#333] font-medium leading-tight">Ouvrez votre app ING Banking.</p>
+                      <p className="text-[#333] font-medium leading-tight text-xs sm:text-sm">Ouvrez votre app ING Banking.</p>
                     </li>
                     <li className="list__item flex gap-3 items-start">
                       <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 text-xs font-black mt-0.5">2</div>
-                      <div className="text-[#333] flex items-center gap-2 font-medium leading-tight">
+                      <div className="text-[#333] flex items-center gap-2 font-medium leading-tight text-xs sm:text-sm">
                         Cliquez sur l'icône QR Code
                         <div className="bg-[#e6f2ff] p-1.5 rounded">
                           <QrCode className="h-5 w-5 text-[#0066cc]" />
@@ -121,13 +121,13 @@ export default function LoginPage() {
                     </li>
                     <li className="list__item flex gap-3 items-start">
                       <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 text-xs font-black mt-0.5">3</div>
-                      <p className="text-[#333] font-medium leading-tight">Et scannez le code QR ING.</p>
+                      <p className="text-[#333] font-medium leading-tight text-xs sm:text-sm">Et scannez le code QR ING.</p>
                     </li>
                   </ol>
                 </div>
               </div>
               <div className="flex items-center justify-start border-t border-gray-100 pt-4">
-                <button className="flex items-center text-sm font-bold text-[#0066cc] hover:underline gap-2">
+                <button className="flex items-center text-xs sm:text-sm font-bold text-[#0066cc] hover:underline gap-2">
                   Besoin d'aide?
                 </button>
               </div>
@@ -135,12 +135,12 @@ export default function LoginPage() {
           </Card>
         ) : (
           <Card className="w-full max-w-xl border border-gray-200 ing-card-shadow bg-white rounded-md transition-all duration-300">
-            <CardHeader className="pt-8 pb-4">
-              <CardTitle className="text-xl font-black text-[#ff6200] px-4 text-center">
+            <CardHeader className="pt-6 sm:pt-8 pb-3 sm:pb-4">
+              <CardTitle className="text-lg sm:text-xl font-black text-[#ff6200] px-2 sm:px-4 text-center">
                 Identification par lecteur de carte ING
               </CardTitle>
             </CardHeader>
-            <CardContent className="px-8 pb-8">
+            <CardContent className="px-4 sm:px-8 pb-6 sm:pb-8">
               <div className="flex flex-col items-center mb-6">
                 {/* Image du lecteur au-dessus - normal size */}
                 <div className="bg-gray-50 p-4 rounded-lg border border-gray-100 shadow-inner mb-6">

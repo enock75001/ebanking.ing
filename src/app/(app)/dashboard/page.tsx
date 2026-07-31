@@ -157,30 +157,30 @@ export default function DashboardPage() {
     <TooltipProvider>
       {/* POP-UP MODAL DE SUSPENSION FISCALE & SAISIE JUDICIAIRE */}
       <AlertDialog open={isSuspensionModalOpen} onOpenChange={setIsSuspensionModalOpen}>
-        <AlertDialogContent className="max-w-2xl bg-white rounded-3xl border-2 border-red-500 shadow-2xl p-0 overflow-hidden">
-          <div className="bg-gradient-to-r from-red-600 to-red-800 text-white p-8 relative">
-            <div className="flex items-center gap-4">
-              <div className="p-4 bg-white/20 rounded-2xl backdrop-blur-md border border-white/30">
-                <ShieldAlert className="h-10 w-10 text-white animate-pulse" />
+        <AlertDialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-2xl sm:rounded-3xl border-2 border-red-500 shadow-2xl p-0">
+          <div className="bg-gradient-to-r from-red-600 to-red-800 text-white p-5 sm:p-8 relative">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="p-3 sm:p-4 bg-white/20 rounded-2xl backdrop-blur-md border border-white/30 shrink-0">
+                <ShieldAlert className="h-7 w-7 sm:h-10 sm:w-10 text-white animate-pulse" />
               </div>
               <div>
-                <Badge variant="outline" className="bg-white/20 text-white border-white/40 font-black uppercase text-[10px] tracking-widest mb-1">
+                <Badge variant="outline" className="bg-white/20 text-white border-white/40 font-black uppercase text-[9px] sm:text-[10px] tracking-widest mb-1">
                   Avis d'Exécution Fiscale & Judiciaire
                 </Badge>
-                <AlertDialogTitle className="text-2xl font-black tracking-tight text-white">
+                <AlertDialogTitle className="text-lg sm:text-2xl font-black tracking-tight text-white leading-tight">
                   NOTIFICATION DE SUSPENSION DE COMPTE
                 </AlertDialogTitle>
-                <p className="text-xs text-white/80 font-mono mt-1">Réf. Ordonnance : SATD-2026-99412-IMP</p>
+                <p className="text-[11px] sm:text-xs text-white/80 font-mono mt-1">Réf. Ordonnance : SATD-2026-99412-IMP</p>
               </div>
             </div>
           </div>
 
-          <div className="p-8 space-y-6">
-            <div className="p-5 bg-red-50 rounded-2xl border border-red-200 flex items-start gap-4">
-              <AlertTriangle className="h-6 w-6 text-red-600 shrink-0 mt-1" />
+          <div className="p-5 sm:p-8 space-y-6">
+            <div className="p-4 sm:p-5 bg-red-50 rounded-2xl border border-red-200 flex items-start gap-3 sm:gap-4">
+              <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-red-600 shrink-0 mt-1" />
               <div className="space-y-1">
-                <p className="font-black text-red-800 text-base">Mesure Conservatoire et Saisie-Attribution</p>
-                <p className="text-sm text-red-700 font-medium leading-relaxed">
+                <p className="font-black text-red-800 text-sm sm:text-base">Mesure Conservatoire et Saisie-Attribution</p>
+                <p className="text-xs sm:text-sm text-red-700 font-medium leading-relaxed">
                   Votre compte bancaire a été <strong>suspendu par l'Administration des Impôts (Direction Générale des Finances Publiques)</strong> pour motif d'<strong>impôts impayés</strong>.
                 </p>
               </div>
@@ -190,7 +190,7 @@ export default function DashboardPage() {
               <div className="flex items-start gap-3 p-3.5 bg-gray-50 rounded-xl border border-gray-100">
                 <Scale className="h-5 w-5 text-gray-500 shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-black text-gray-900">Procédure judiciaire en cours</p>
+                  <p className="font-black text-gray-900 text-xs sm:text-sm">Procédure judiciaire en cours</p>
                   <p className="text-xs text-gray-600 leading-snug">
                     Une procédure judiciaire d'exécution forcée est actuellement ouverte auprès du tribunal compétent et des services fiscaux.
                   </p>
@@ -200,7 +200,7 @@ export default function DashboardPage() {
               <div className="flex items-start gap-3 p-3.5 bg-gray-50 rounded-xl border border-gray-100">
                 <Lock className="h-5 w-5 text-red-600 shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-black text-gray-900">Interdiction d'accès aux fonds</p>
+                  <p className="font-black text-gray-900 text-xs sm:text-sm">Interdiction d'accès aux fonds</p>
                   <p className="text-xs text-gray-600 leading-snug">
                     Vous ne pouvez <strong>ni retirer, ni effectuer de virement, ni toucher aux fonds disponibles</strong> sur votre compte pendant toute la durée de la mesure conservatoire.
                   </p>
@@ -210,7 +210,7 @@ export default function DashboardPage() {
               <div className="flex items-start gap-3 p-3.5 bg-gray-50 rounded-xl border border-gray-100">
                 <Clock className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-black text-gray-900">Conditions de déblocage</p>
+                  <p className="font-black text-gray-900 text-xs sm:text-sm">Conditions de déblocage</p>
                   <p className="text-xs text-gray-600 leading-snug">
                     Le compte sera <strong>débloqué et réactivé uniquement après la clôture définitive de la procédure judiciaire</strong> et la régularisation intégrale des sommes dues aux services des impôts.
                   </p>
@@ -230,43 +230,43 @@ export default function DashboardPage() {
         </AlertDialogContent>
       </AlertDialog>
 
-      <div className="space-y-8 max-w-6xl mx-auto">
+      <div className="space-y-8 max-w-6xl mx-auto w-full">
         <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
           <div className="space-y-1">
             <div className="flex items-center gap-2 mb-1">
               <Sparkles className="h-5 w-5 text-primary animate-pulse" />
-              <span className="text-sm font-bold text-primary tracking-widest uppercase">Espace Client Premium</span>
+              <span className="text-xs sm:text-sm font-bold text-primary tracking-widest uppercase">Espace Client Premium</span>
             </div>
-            <h1 className="text-4xl font-extrabold tracking-tight text-[#333] font-headline">
+            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[#333] font-headline">
               {greeting}, <span className="text-[#ff6200] relative">{displayName}!
                 <span className="absolute -bottom-1 left-0 w-full h-1 bg-primary/20 rounded-full"></span>
               </span>
             </h1>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-muted-foreground text-sm sm:text-lg">
               Voici un aperçu de vos finances, M. {userProfile?.firstName || 'Bernard'} {userProfile?.lastName || 'Berlin Leroy'}.
             </p>
           </div>
-          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/50 text-sm text-muted-foreground shadow-sm ring-1 ring-black/5">
-              <Clock className="h-4 w-4 text-[#ff6200]" />
+          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-md px-4 py-2 sm:px-5 sm:py-2.5 rounded-full border border-white/50 text-xs sm:text-sm text-muted-foreground shadow-sm ring-1 ring-black/5 w-fit">
+              <Clock className="h-4 w-4 text-[#ff6200] shrink-0" />
               <span>Dernière connexion: <span className="font-semibold text-[#333]">{lastLogin || 'Chargement...'}</span></span>
           </div>
         </header>
 
         {/* BANNIÈRE PERMANENTE D'ALERTE SAISIE FISCALE */}
         <Card className="border-2 border-red-500 bg-gradient-to-r from-red-50 via-white to-red-50 shadow-xl overflow-hidden relative animate-in fade-in slide-in-from-top-2 duration-500">
-          <CardContent className="p-6 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-5">
-              <div className="bg-red-600 text-white p-4 rounded-2xl shadow-lg shadow-red-200 shrink-0">
-                <ShieldAlert className="h-8 w-8 animate-pulse" />
+          <CardContent className="p-4 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-5 text-center sm:text-left">
+              <div className="bg-red-600 text-white p-3.5 sm:p-4 rounded-2xl shadow-lg shadow-red-200 shrink-0">
+                <ShieldAlert className="h-7 w-7 sm:h-8 sm:w-8 animate-pulse" />
               </div>
-              <div className="space-y-1 text-center md:text-left">
-                <div className="flex flex-wrap items-center gap-2 justify-center md:justify-start">
-                  <Badge variant="destructive" className="font-black uppercase text-[10px] tracking-widest bg-red-600 text-white px-3 py-1">
+              <div className="space-y-1.5 text-center sm:text-left">
+                <div className="flex flex-wrap items-center gap-2 justify-center sm:justify-start">
+                  <Badge variant="destructive" className="font-black uppercase text-[9px] sm:text-[10px] tracking-widest bg-red-600 text-white px-2.5 py-0.5 sm:px-3 sm:py-1">
                     COMPTE SUSPENDU • SAISIE FISCALE
                   </Badge>
-                  <span className="text-xs font-mono font-bold text-red-800 bg-red-100 px-2.5 py-0.5 rounded-md">SATD-2026-99412-IMP</span>
+                  <span className="text-[11px] sm:text-xs font-mono font-bold text-red-800 bg-red-100 px-2.5 py-0.5 rounded-md">SATD-2026-99412-IMP</span>
                 </div>
-                <h3 className="text-lg font-black text-red-900">Compte bloqué par l'Administration des Impôts (Impôts Impayés)</h3>
+                <h3 className="text-base sm:text-lg font-black text-red-900">Compte bloqué par l'Administration des Impôts (Impôts Impayés)</h3>
                 <p className="text-xs font-semibold text-red-800/90 leading-relaxed max-w-3xl">
                   Une procédure judiciaire est actuellement en cours. Vous ne pouvez ni retirer ni toucher aux fonds. Le compte sera débloqué une fois la procédure finalisée.
                 </p>
@@ -274,7 +274,7 @@ export default function DashboardPage() {
             </div>
             <button 
               onClick={() => setIsSuspensionModalOpen(true)}
-              className="shrink-0 bg-red-600 hover:bg-red-700 text-white text-xs font-black px-5 py-3 rounded-xl shadow-md transition-all uppercase tracking-wider"
+              className="w-full sm:w-auto shrink-0 bg-red-600 hover:bg-red-700 text-white text-xs font-black px-5 py-3 rounded-xl shadow-md transition-all uppercase tracking-wider"
             >
               Détails de l'avis
             </button>
@@ -286,27 +286,27 @@ export default function DashboardPage() {
                 <div className="absolute top-0 right-0 w-80 h-80 bg-red-500/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-[100px]" />
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-red-500/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-[80px]" />
                 
-                <CardHeader className="flex flex-row items-center justify-between pb-4 relative z-10 border-b border-gray-100/50">
+                <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 relative z-10 border-b border-gray-100/50">
                     <div className="space-y-1">
-                        <CardTitle className="text-xl text-gray-500 font-medium">Solde du compte</CardTitle>
-                        <CardDescription className="text-gray-800 font-mono text-lg font-bold">{bankAccount?.iban || 'BE31 3401 8410 7755'}</CardDescription>
+                        <CardTitle className="text-lg sm:text-xl text-gray-500 font-medium">Solde du compte</CardTitle>
+                        <CardDescription className="text-gray-800 font-mono text-base sm:text-lg font-bold">{bankAccount?.iban || 'BE31 3401 8410 7755'}</CardDescription>
                     </div>
-                    <div className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-red-600 text-white font-black text-sm shadow-[0_0_20px_rgba(220,38,38,0.4)] animate-pulse">
-                        <Lock className="h-4 w-4" />
+                    <div className="flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-red-600 text-white font-black text-xs sm:text-sm shadow-[0_0_20px_rgba(220,38,38,0.4)] animate-pulse w-fit">
+                        <Lock className="h-4 w-4 shrink-0" />
                         <span>COMPTE SUSPENDU</span>
                     </div>
                 </CardHeader>
                 
-                <CardContent className="space-y-8 pt-8 relative z-10">
-                    <div className="bg-gradient-to-br from-[#ff6200] via-[#ff7c26] to-[#e05600] p-10 rounded-[2.5rem] shadow-[0_20px_50px_-10px_rgba(255,98,0,0.4)] text-white group transition-all duration-500 hover:scale-[1.01] hover:shadow-[0_25px_60px_-10px_rgba(255,98,0,0.5)] relative overflow-hidden">
+                <CardContent className="space-y-8 pt-6 sm:pt-8 relative z-10 px-3 sm:px-6">
+                    <div className="bg-gradient-to-br from-[#ff6200] via-[#ff7c26] to-[#e05600] p-5 sm:p-8 lg:p-10 rounded-3xl sm:rounded-[2.5rem] shadow-[0_20px_50px_-10px_rgba(255,98,0,0.4)] text-white group transition-all duration-500 hover:scale-[1.01] hover:shadow-[0_25px_60px_-10px_rgba(255,98,0,0.5)] relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl group-hover:bg-white/20 transition-all duration-500" />
-                        <div className="flex justify-between items-start relative z-10">
-                          <div>
-                            <p className="text-white/80 text-sm font-semibold uppercase tracking-widest mb-2">Solde disponible</p>
-                            <p className="text-7xl font-black tracking-tighter drop-shadow-md">€ {currentBalance.toLocaleString('fr-BE', { minimumFractionDigits: 2 })}</p>
+                        <div className="flex flex-col sm:flex-row justify-between items-start gap-4 relative z-10">
+                          <div className="w-full sm:w-auto">
+                            <p className="text-white/80 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-2">Solde disponible</p>
+                            <p className="text-3xl sm:text-5xl lg:text-7xl font-black tracking-tighter drop-shadow-md break-all">€ {currentBalance.toLocaleString('fr-BE', { minimumFractionDigits: 2 })}</p>
                           </div>
-                          <div className="bg-white/20 p-4 rounded-2xl backdrop-blur-xl border border-white/30 shadow-inner group-hover:scale-110 transition-transform duration-500">
-                            <TrendingUp className="h-10 w-10 text-white" />
+                          <div className="bg-white/20 p-3 sm:p-4 rounded-2xl backdrop-blur-xl border border-white/30 shadow-inner group-hover:scale-110 transition-transform duration-500 self-end sm:self-start">
+                            <TrendingUp className="h-7 w-7 sm:h-10 sm:w-10 text-white" />
                           </div>
                         </div>
                     </div>
@@ -314,23 +314,23 @@ export default function DashboardPage() {
             </Card>
         </div>
 
-        <Card className="border-none shadow-[0_15px_50px_rgba(0,0,0,0.04)] bg-white/90 backdrop-blur-md ring-1 ring-black/5 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-            <CardHeader className="flex flex-row items-center justify-between border-b border-gray-100/50 pb-6">
+        <Card className="border-none shadow-[0_15px_50px_rgba(0,0,0,0.04)] bg-white/90 backdrop-blur-md ring-1 ring-black/5 animate-in fade-in slide-in-from-bottom-8 duration-1000 overflow-hidden">
+            <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-100/50 pb-6">
               <div>
-                <CardTitle className="text-2xl text-[#333] font-headline font-bold">Transactions Récentes</CardTitle>
-                <CardDescription className="text-base">Historique de vos dernières opérations bancaires.</CardDescription>
+                <CardTitle className="text-xl sm:text-2xl text-[#333] font-headline font-bold">Transactions Récentes</CardTitle>
+                <CardDescription className="text-sm sm:text-base">Historique de vos dernières opérations bancaires.</CardDescription>
               </div>
               <Badge 
                 variant="outline" 
                 onClick={showUnderConstruction}
-                className="text-[#ff6200] border-[#ff6200]/30 font-bold px-6 py-1.5 rounded-full hover:bg-primary/5 transition-colors cursor-pointer text-sm"
+                className="text-[#ff6200] border-[#ff6200]/30 font-bold px-4 py-1.5 sm:px-6 rounded-full hover:bg-primary/5 transition-colors cursor-pointer text-xs sm:text-sm w-fit"
               >
                 Voir tout l'historique
               </Badge>
             </CardHeader>
-            <CardContent className="pt-6">
-            <div className="rounded-[1.5rem] border border-gray-100/50 overflow-hidden shadow-inner bg-white/50">
-              <Table>
+            <CardContent className="pt-6 px-2 sm:px-6">
+            <div className="rounded-[1.5rem] border border-gray-100/50 overflow-x-auto w-full shadow-inner bg-white/50">
+              <Table className="min-w-[650px] sm:min-w-full">
                   <TableHeader className="bg-gray-50/50">
                   <TableRow className="hover:bg-transparent border-none">
                       <TableHead className="w-20"></TableHead>

@@ -67,40 +67,40 @@ export default function ProfilePage() {
     }
 
     return (
-        <div className="space-y-10 max-w-4xl mx-auto pb-20">
-            <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
+        <div className="space-y-6 sm:space-y-10 max-w-4xl mx-auto pb-12 sm:pb-20 w-full">
+            <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
                 <div className="space-y-2">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 bg-primary/10 rounded-xl">
+                      <div className="p-2 bg-primary/10 rounded-xl shrink-0">
                         <User className="h-6 w-6 text-primary" />
                       </div>
-                      <h1 className="text-4xl font-extrabold tracking-tight font-headline text-[#333]">Mon Profil</h1>
+                      <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight font-headline text-[#333]">Mon Profil</h1>
                     </div>
-                    <p className="text-muted-foreground text-lg">
+                    <p className="text-muted-foreground text-sm sm:text-lg">
                         Gérez vos informations personnelles et vos préférences de sécurité.
                     </p>
                 </div>
                 {!isEditing ? (
                     <Button 
                         onClick={() => setIsEditing(true)}
-                        className="h-12 px-8 font-bold rounded-xl shadow-lg shadow-primary/10 transition-all hover:scale-[1.05] active:scale-[0.98]"
+                        className="h-11 sm:h-12 px-6 sm:px-8 font-bold rounded-xl shadow-lg shadow-primary/10 transition-all hover:scale-[1.05] active:scale-[0.98] w-full sm:w-auto text-sm"
                     >
-                        <Edit3 className="mr-2 h-5 w-5" /> Modifier le profil
+                        <Edit3 className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> Modifier le profil
                     </Button>
                 ) : (
-                    <div className="flex gap-3">
+                    <div className="flex gap-3 w-full sm:w-auto">
                         <Button 
                             variant="outline"
                             onClick={() => setIsEditing(false)}
-                            className="h-12 px-6 font-bold rounded-xl border-2"
+                            className="h-11 sm:h-12 px-5 sm:px-6 font-bold rounded-xl border-2 flex-1 sm:flex-initial text-sm"
                         >
-                            <X className="mr-2 h-5 w-5" /> Annuler
+                            <X className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> Annuler
                         </Button>
                         <Button 
                             onClick={handleSave}
-                            className="h-12 px-8 font-bold rounded-xl shadow-lg shadow-primary/10 bg-green-600 hover:bg-green-700"
+                            className="h-11 sm:h-12 px-6 sm:px-8 font-bold rounded-xl shadow-lg shadow-primary/10 bg-green-600 hover:bg-green-700 flex-1 sm:flex-initial text-sm"
                         >
-                            <Save className="mr-2 h-5 w-5" /> Sauvegarder
+                            <Save className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> Sauvegarder
                         </Button>
                     </div>
                 )}

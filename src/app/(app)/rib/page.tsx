@@ -34,22 +34,22 @@ export default function RibPage() {
     };
 
     return (
-        <div className="space-y-8 max-w-4xl mx-auto animate-in fade-in duration-700">
-            <header className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <div className="space-y-6 sm:space-y-8 max-w-4xl mx-auto animate-in fade-in duration-700 w-full">
+            <header className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 sm:gap-6">
                 <div className="space-y-2">
                     <div className="flex items-center gap-3">
-                        <div className="p-2 bg-primary/10 rounded-xl">
+                        <div className="p-2 bg-primary/10 rounded-xl shrink-0">
                             <Landmark className="h-6 w-6 text-primary" />
                         </div>
-                        <h1 className="text-4xl font-extrabold tracking-tight font-headline text-[#333]">Détails du compte (RIB)</h1>
+                        <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight font-headline text-[#333]">Détails du compte (RIB)</h1>
                     </div>
-                    <p className="text-muted-foreground text-lg">
+                    <p className="text-muted-foreground text-sm sm:text-lg">
                         Identifiants uniques pour recevoir des virements nationaux et internationaux.
                     </p>
                 </div>
-                <div className="flex gap-3">
-                    <Button variant="outline" className="rounded-xl border-2 font-bold"><Printer className="mr-2 h-4 w-4" /> Imprimer</Button>
-                    <Button className="rounded-xl font-bold shadow-lg shadow-primary/10"><Download className="mr-2 h-4 w-4" /> Télécharger PDF</Button>
+                <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                    <Button variant="outline" className="rounded-xl border-2 font-bold w-full sm:w-auto text-sm"><Printer className="mr-2 h-4 w-4" /> Imprimer</Button>
+                    <Button className="rounded-xl font-bold shadow-lg shadow-primary/10 w-full sm:w-auto text-sm"><Download className="mr-2 h-4 w-4" /> Télécharger PDF</Button>
                 </div>
             </header>
 

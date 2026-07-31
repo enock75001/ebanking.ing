@@ -219,25 +219,25 @@ export default function TransferPage() {
   }
 
   return (
-    <div className="space-y-10 max-w-5xl mx-auto pb-20">
-      <header className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
+    <div className="space-y-6 sm:space-y-10 max-w-5xl mx-auto pb-12 sm:pb-20 w-full">
+      <header className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 sm:gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
         <div className="space-y-2">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-primary/10 rounded-xl shadow-inner">
-              <ArrowRightLeft className="h-7 w-7 text-primary animate-pulse" />
+            <div className="p-2 bg-primary/10 rounded-xl shadow-inner shrink-0">
+              <ArrowRightLeft className="h-6 w-6 sm:h-7 sm:w-7 text-primary animate-pulse" />
             </div>
-            <h1 className="text-4xl font-extrabold tracking-tight font-headline text-[#333]">Nouvel Ordre de Virement</h1>
+            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight font-headline text-[#333]">Nouvel Ordre de Virement</h1>
           </div>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-muted-foreground text-sm sm:text-lg">
             Gérez vos flux financiers Bernard avec le niveau de sécurité Private Gold.
           </p>
         </div>
         <div className="flex items-center gap-4">
-          <div className="bg-white/80 backdrop-blur-md px-6 py-2.5 rounded-full border border-gray-100 shadow-sm flex items-center gap-3 font-bold text-xs uppercase tracking-widest text-gray-500">
+          <div className="bg-white/80 backdrop-blur-md px-4 py-2 sm:px-6 sm:py-2.5 rounded-full border border-gray-100 shadow-sm flex items-center gap-2 sm:gap-3 font-bold text-xs uppercase tracking-widest text-gray-500 w-fit">
             <span className={cn(currentStep >= 1 ? "text-primary" : "")}>1</span>
-            <div className="w-4 h-0.5 bg-gray-200" />
+            <div className="w-3 sm:w-4 h-0.5 bg-gray-200" />
             <span className={cn(currentStep >= 2 ? "text-primary" : "")}>2</span>
-            <div className="w-4 h-0.5 bg-gray-200" />
+            <div className="w-3 sm:w-4 h-0.5 bg-gray-200" />
             <span className={cn(currentStep >= 3 ? "text-primary" : "")}>3</span>
           </div>
         </div>
@@ -245,9 +245,9 @@ export default function TransferPage() {
 
       {/* BANNIÈRE D'ALERTE SUSPENSION JUDICIAIRE SUR VIREMENTS */}
       <Card className="border-2 border-red-500 bg-red-50 shadow-xl overflow-hidden relative">
-        <CardContent className="p-6 flex flex-col md:flex-row items-center gap-6">
-          <div className="bg-red-600 text-white p-4 rounded-2xl shadow-lg shrink-0">
-            <Lock className="h-8 w-8 animate-pulse" />
+        <CardContent className="p-4 sm:p-6 flex flex-col md:flex-row items-center gap-4 sm:gap-6">
+          <div className="bg-red-600 text-white p-3.5 sm:p-4 rounded-2xl shadow-lg shrink-0">
+            <Lock className="h-7 w-7 sm:h-8 sm:w-8 animate-pulse" />
           </div>
           <div className="space-y-1 text-center md:text-left">
             <div className="flex items-center gap-2 justify-center md:justify-start">

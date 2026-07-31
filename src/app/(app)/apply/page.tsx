@@ -25,15 +25,15 @@ export default function ApplyPage() {
   };
 
   return (
-    <div className="space-y-8 max-w-5xl mx-auto">
+    <div className="space-y-6 sm:space-y-8 max-w-5xl mx-auto w-full">
       <header className="space-y-2 animate-in fade-in slide-in-from-top-4 duration-500">
-        <div className="flex items-center gap-4 mb-2">
-          <div className="bg-primary/10 p-3 rounded-2xl shadow-inner">
-            <PlusCircle className="h-8 w-8 text-primary" />
+        <div className="flex items-center gap-3 sm:gap-4 mb-2">
+          <div className="bg-primary/10 p-2.5 sm:p-3 rounded-2xl shadow-inner shrink-0">
+            <PlusCircle className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
           </div>
-          <h1 className="text-4xl font-extrabold tracking-tight font-headline text-[#333]">Souscrire</h1>
+          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight font-headline text-[#333]">Souscrire</h1>
         </div>
-        <p className="text-gray-600 text-lg leading-relaxed max-w-2xl">
+        <p className="text-gray-600 text-sm sm:text-lg leading-relaxed max-w-2xl">
           Découvrez nos produits financiers conçus pour simplifier votre vie bancaire.
         </p>
       </header>

@@ -425,17 +425,17 @@ export default function TransactionDetailsPage() {
   const isDeposit = transaction.transactionType === "Deposit";
 
   return (
-    <div className="max-w-5xl mx-auto space-y-10 pb-24 animate-in fade-in duration-700">
-      <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-        <Button variant="ghost" onClick={() => router.back()} className="font-bold hover:text-primary transition-all p-0">
+    <div className="max-w-5xl mx-auto space-y-6 sm:space-y-10 pb-16 sm:pb-24 animate-in fade-in duration-700 w-full">
+      <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6">
+        <Button variant="ghost" onClick={() => router.back()} className="font-bold hover:text-primary transition-all p-0 justify-start">
           <ArrowLeft className="mr-2 h-5 w-5" /> Retour à l'historique
         </Button>
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
           <Button 
             variant="outline" 
             onClick={handleDelete} 
             disabled={isDeleting}
-            className="rounded-xl border-2 font-bold h-12 px-6 hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-all"
+            className="rounded-xl border-2 font-bold h-11 sm:h-12 px-5 sm:px-6 hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-all text-sm w-full sm:w-auto"
           >
             <Trash2 className="mr-2 h-4 w-4" /> {isDeleting ? "En cours..." : "Supprimer"}
           </Button>
@@ -443,9 +443,9 @@ export default function TransactionDetailsPage() {
             variant="default" 
             onClick={handleDownloadPdf}
             disabled={isDownloading}
-            className="rounded-xl font-black h-12 px-8 shadow-xl shadow-primary/10 transition-all hover:scale-[1.02] bg-[#ff6200] hover:bg-[#e05600] text-white"
+            className="rounded-xl font-black h-11 sm:h-12 px-6 sm:px-8 shadow-xl shadow-primary/10 transition-all hover:scale-[1.02] bg-[#ff6200] hover:bg-[#e05600] text-white text-sm w-full sm:w-auto"
           >
-            <FileDown className="mr-2 h-5 w-5" /> {isDownloading ? "Génération..." : "Télécharger le reçu PDF"}
+            <FileDown className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> {isDownloading ? "Génération..." : "Télécharger le reçu PDF"}
           </Button>
         </div>
       </header>
@@ -455,14 +455,14 @@ export default function TransactionDetailsPage() {
           <div className="absolute top-0 right-0 p-10 opacity-5 pointer-events-none">
             <ShieldAlert className="h-40 w-40 text-red-600" />
           </div>
-          <CardContent className="p-10 flex flex-col md:flex-row items-center gap-10 relative z-10">
-            <div className="bg-red-600 text-white p-8 rounded-[2.5rem] shadow-2xl shadow-red-200 animate-pulse">
-              <Lock className="h-14 w-14" />
+          <CardContent className="p-5 sm:p-10 flex flex-col md:flex-row items-center gap-6 sm:gap-10 relative z-10">
+            <div className="bg-red-600 text-white p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] shadow-2xl shadow-red-200 animate-pulse shrink-0">
+              <Lock className="h-10 w-10 sm:h-14 sm:w-14" />
             </div>
             <div className="space-y-3 text-center md:text-left">
-              <Badge variant="destructive" className="font-black uppercase tracking-widest text-[10px] px-4 py-1.5 mb-2">Avis de suspension immédiate</Badge>
-              <h2 className="text-4xl font-black text-red-600 tracking-tighter leading-none">Virement Suspendu par SafeGuard</h2>
-              <p className="text-xl font-bold text-red-700/80 leading-snug max-w-2xl">
+              <Badge variant="destructive" className="font-black uppercase tracking-widest text-[9px] sm:text-[10px] px-3 py-1 mb-2">Avis de suspension immédiate</Badge>
+              <h2 className="text-2xl sm:text-4xl font-black text-red-600 tracking-tighter leading-none">Virement Suspendu par SafeGuard</h2>
+              <p className="text-base sm:text-xl font-bold text-red-700/80 leading-snug max-w-2xl">
                 Cet ordre a été intercepté par notre audit de conformité Private Banking. 
                 Une validation d'identité est requise pour libérer les fonds.
               </p>
@@ -471,41 +471,41 @@ export default function TransactionDetailsPage() {
         </Card>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-        <div className="lg:col-span-2 space-y-10">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-10">
+        <div className="lg:col-span-2 space-y-6 sm:space-y-10">
           <Card className="premium-card border-none overflow-hidden relative shadow-[0_40px_80px_-15px_rgba(0,0,0,0.12)]">
-            <div className="absolute top-0 left-0 w-full h-4 bg-[#ff6200]" />
+            <div className="absolute top-0 left-0 w-full h-3 sm:h-4 bg-[#ff6200]" />
             
-            <CardHeader className="bg-gray-50/50 pb-10 border-b border-gray-100 px-12 pt-12">
-              <div className="flex justify-between items-start">
+            <CardHeader className="bg-gray-50/50 pb-6 sm:pb-10 border-b border-gray-100 px-5 sm:px-12 pt-6 sm:pt-12">
+              <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
                 <div className="space-y-3">
-                  <div className="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 inline-block">
-                    <Image src="https://i.imgur.com/WWZ10oQ.png" alt="ING Logo" width={90} height={36} className="opacity-90" />
+                  <div className="bg-white p-2.5 sm:p-3 rounded-2xl shadow-sm border border-gray-100 inline-block">
+                    <Image src="https://i.imgur.com/WWZ10oQ.png" alt="ING Logo" width={80} height={32} className="opacity-90 sm:w-[90px]" />
                   </div>
-                  <h3 className="text-4xl font-black text-[#333] tracking-tighter">
+                  <h3 className="text-2xl sm:text-4xl font-black text-[#333] tracking-tighter">
                     {isDeposit ? "Avis de Crédit" : "Avis de Débit"}
                   </h3>
-                  <p className="text-[11px] font-black text-muted-foreground uppercase tracking-[0.3em]">Extrait de Virement Certifié • Private Banking Gold</p>
+                  <p className="text-[10px] sm:text-[11px] font-black text-muted-foreground uppercase tracking-[0.2em] sm:tracking-[0.3em]">Extrait de Virement Certifié • Private Banking Gold</p>
                 </div>
-                <div className="text-right space-y-2">
-                  <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">RÉFÉRENCE ARCHIVE</p>
-                  <p className="text-sm font-mono font-bold text-[#333] bg-white px-4 py-1.5 rounded-xl border border-gray-100 shadow-sm inline-block">#TRX-{(transaction.id || 'BNP3180000').slice(-10).toUpperCase()}</p>
+                <div className="text-left sm:text-right space-y-1 sm:space-y-2">
+                  <p className="text-[9px] sm:text-[10px] font-black text-muted-foreground uppercase tracking-widest">RÉFÉRENCE ARCHIVE</p>
+                  <p className="text-xs sm:text-sm font-mono font-bold text-[#333] bg-white px-3 py-1 sm:px-4 sm:py-1.5 rounded-xl border border-gray-100 shadow-sm inline-block">#TRX-{(transaction.id || 'BNP3180000').slice(-10).toUpperCase()}</p>
                 </div>
               </div>
             </CardHeader>
 
             <CardContent className="p-0">
-              <div className="p-12 text-center bg-white relative">
+              <div className="p-6 sm:p-12 text-center bg-white relative">
                 <div className="absolute inset-0 bg-primary/5 blur-[80px] opacity-30 pointer-events-none" />
                 <div className="relative z-10 space-y-2">
-                  <p className="text-[13px] font-black text-muted-foreground uppercase tracking-[0.4em] mb-4">
+                  <p className="text-xs sm:text-[13px] font-black text-muted-foreground uppercase tracking-[0.2em] sm:tracking-[0.4em] mb-2 sm:mb-4">
                     {isDeposit ? "Montant Crédité" : "Montant Principal"}
                   </p>
-                  <p className={`text-8xl font-black tracking-tighter drop-shadow-md ${isDeposit ? 'text-green-600' : 'text-[#333]'}`}>
+                  <p className={`text-3xl sm:text-6xl lg:text-8xl font-black tracking-tighter drop-shadow-md break-all ${isDeposit ? 'text-green-600' : 'text-[#333]'}`}>
                     {isDeposit ? '+' : '-'}€ {transaction.amount.toLocaleString('fr-BE', { minimumFractionDigits: 2 })}
                   </p>
-                  <div className="flex items-center justify-center gap-3 mt-6">
-                    <Badge variant="outline" className={`font-bold px-5 py-1.5 rounded-full uppercase text-[11px] tracking-widest ${isDeposit ? 'bg-green-50 text-green-700 border-green-200' : 'bg-primary/5 text-primary border-primary/20'}`}>
+                  <div className="flex items-center justify-center gap-3 mt-4 sm:mt-6">
+                    <Badge variant="outline" className={`font-bold px-4 py-1 sm:px-5 sm:py-1.5 rounded-full uppercase text-[10px] sm:text-[11px] tracking-widest ${isDeposit ? 'bg-green-50 text-green-700 border-green-200' : 'bg-primary/5 text-primary border-primary/20'}`}>
                       {isDeposit ? 'Virement SEPA Reçu' : (transaction.transferType === 'instant' ? 'Virement Instantané' : 'Virement Classique')}
                     </Badge>
                   </div>
@@ -514,7 +514,7 @@ export default function TransactionDetailsPage() {
 
               <Separator className="bg-gray-100" />
 
-              <div className="p-12 space-y-12">
+              <div className="p-5 sm:p-12 space-y-8 sm:space-y-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                   {/* BOX 1 : DONNEUR D'ORDRE (ÉMETTEUR) */}
                   <div className="space-y-6">

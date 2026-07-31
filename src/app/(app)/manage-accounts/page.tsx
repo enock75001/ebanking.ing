@@ -36,26 +36,26 @@ export default function ManageAccountsPage() {
     };
 
     return (
-        <div className="space-y-10 max-w-5xl mx-auto animate-in fade-in duration-700">
-            <header className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <div className="space-y-8 sm:space-y-10 max-w-5xl mx-auto w-full animate-in fade-in duration-700">
+            <header className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 sm:gap-6">
                 <div className="space-y-2">
-                    <div className="flex items-center gap-4">
-                        <div className="p-3 bg-primary/10 rounded-2xl shadow-inner">
-                            <Landmark className="h-8 w-8 text-primary" />
+                    <div className="flex items-center gap-3 sm:gap-4">
+                        <div className="p-2.5 sm:p-3 bg-primary/10 rounded-2xl shadow-inner shrink-0">
+                            <Landmark className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
                         </div>
-                        <h1 className="text-4xl font-extrabold tracking-tight font-headline text-[#333]">Détails du compte (RIB)</h1>
+                        <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight font-headline text-[#333]">Détails du compte (RIB)</h1>
                     </div>
-                    <p className="text-muted-foreground text-lg">
+                    <p className="text-muted-foreground text-sm sm:text-lg">
                         Identifiants certifiés Bernard Berlin Leroy pour vos opérations nationales et internationales.
                     </p>
                 </div>
-                <div className="flex gap-4">
-                    <Button variant="outline" className="h-12 px-6 rounded-xl border-2 font-bold hover:bg-gray-50"><Printer className="mr-2 h-5 w-5" /> Imprimer</Button>
-                    <Button className="h-12 px-6 rounded-xl font-bold shadow-xl shadow-primary/10 transition-all hover:scale-[1.05]"><Download className="mr-2 h-5 w-5" /> Télécharger PDF</Button>
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
+                    <Button variant="outline" className="h-11 sm:h-12 px-5 sm:px-6 rounded-xl border-2 font-bold hover:bg-gray-50 w-full sm:w-auto text-sm"><Printer className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> Imprimer</Button>
+                    <Button className="h-11 sm:h-12 px-5 sm:px-6 rounded-xl font-bold shadow-xl shadow-primary/10 transition-all hover:scale-[1.05] w-full sm:w-auto text-sm"><Download className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> Télécharger PDF</Button>
                 </div>
             </header>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-10">
                 <div className="lg:col-span-2 space-y-10">
                     <Card className="premium-card border-none overflow-hidden relative ring-1 ring-black/5">
                         <div className="absolute top-0 left-0 w-full h-2 bg-primary" />
